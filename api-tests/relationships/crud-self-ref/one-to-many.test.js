@@ -12,12 +12,7 @@ const createInitialData = async keystone => {
     keystone,
     query: `
 mutation {
-  createCompanies(data: [{ data: { name: "${sampleOne(
-    alphanumGenerator
-  )}" } }, { data: { name: "${sampleOne(alphanumGenerator)}" } }, { data: { name: "${sampleOne(
-      alphanumGenerator
-    )}" } }]) { id }
-  createLocations(data: [{ data: { name: "${sampleOne(
+  createUsers(data: [{ data: { name: "${sampleOne(
     alphanumGenerator
   )}" } }, { data: { name: "${sampleOne(alphanumGenerator)}" } }, { data: { name: "${sampleOne(
       alphanumGenerator
@@ -25,41 +20,41 @@ mutation {
 }
 `,
   });
-  return { locations: data.createLocations, companies: data.createCompanies };
+  return { users: data.createUsers };
 };
 
-const createCompanyAndLocation = async keystone => {
+const createUserAndFriend = async keystone => {
   const {
-    data: { createCompany },
+    data: { createUser },
   } = await graphqlRequest({
     keystone,
     query: `
 mutation {
-  createCompany(data: {
-    locations: { create: [{ name: "${sampleOne(alphanumGenerator)}" }] }
-  }) { id locations { id } }
+  createUser(data: {
+    friends: { create: [{ name: "${sampleOne(alphanumGenerator)}" }] }
+  }) { id friends { id } }
 }`,
   });
-  const { Company, Location } = await getCompanyAndLocation(
+  const { User, Friend } = await getUserAndFriend(
     keystone,
-    createCompany.id,
-    createCompany.locations[0].id
+    createUser.id,
+    createUser.friends[0].id
   );
 
   // Sanity check the links are setup correctly
-  expect(Company.locations.map(({ id }) => id.toString())).toEqual([Location.id]);
-  expect(Location.company.id.toString()).toBe(Company.id.toString());
+  expect(User.friends.map(({ id }) => id.toString())).toEqual([Friend.id]);
+  expect(Friend.friendOf.id.toString()).toBe(User.id.toString());
 
-  return { company: createCompany, location: createCompany.locations[0] };
+  return { user: createUser, friend: createUser.friends[0] };
 };
 
-const getCompanyAndLocation = async (keystone, companyId, locationId) => {
+const getUserAndFriend = async (keystone, userId, friendId) => {
   const { data } = await graphqlRequest({
     keystone,
     query: `
   {
-    Company(where: { id: "${companyId}"} ) { id locations { id } }
-    Location(where: { id: "${locationId}"} ) { id company { id } }
+    User(where: { id: "${userId}"} ) { id friends { id } }
+    Friend: User(where: { id: "${friendId}"} ) { id friendOf { id } }
   }`,
   });
   return data;
@@ -69,12 +64,12 @@ const createReadData = async keystone => {
   // create locations [A, A, B, B, C, C];
   const { data } = await graphqlRequest({
     keystone,
-    query: `mutation create($locations: [LocationsCreateInput]) { createLocations(data: $locations) { id name } }`,
+    query: `mutation create($users: [UsersCreateInput]) { createUsers(data: $users) { id name } }`,
     variables: {
-      locations: ['A', 'A', 'B', 'B', 'C', 'C'].map(name => ({ data: { name } })),
+      users: ['A', 'A', 'B', 'B', 'C', 'C'].map(name => ({ data: { name } })),
     },
   });
-  const { createLocations } = data;
+  const { createUsers } = data;
   await Promise.all(
     Object.entries({
       ABC: [0, 2, 4], //  -> [A, B, C]
@@ -82,16 +77,16 @@ const createReadData = async keystone => {
       C: [5], //  -> [C]
       '': [], //  -> []
     }).map(async ([name, locationIdxs]) => {
-      const ids = locationIdxs.map(i => ({ id: createLocations[i].id }));
+      const ids = locationIdxs.map(i => ({ id: createUsers[i].id }));
       const { data } = await graphqlRequest({
         keystone,
-        query: `mutation create($locations: [LocationWhereUniqueInput], $name: String) { createCompany(data: {
+        query: `mutation create($friends: [UserWhereUniqueInput], $name: String) { createUser(data: {
           name: $name
-    locations: { connect: $locations }
-  }) { id locations { name }}}`,
-        variables: { locations: ids, name },
+          friends: { connect: $friends }
+  }) { id friends { name }}}`,
+        variables: { friends: ids, name },
       });
-      return data.createCompany;
+      return data.updateUser;
     })
   );
 };
@@ -104,28 +99,23 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
     // one of the tables involved. As such, we want to ensure that our
     // tests work correctly no matter which side of the relationship is
     // defined first.
-    const createCompanyList = keystone =>
-      keystone.createList('Company', {
-        fields: {
-          name: { type: Text },
-          locations: { type: Relationship, ref: 'Location.company', many: true },
-        },
-      });
-    const createLocationList = keystone =>
-      keystone.createList('Location', {
-        fields: {
-          name: { type: Text },
-          company: { type: Relationship, ref: 'Company.locations' },
-        },
-      });
-
     const createListsLR = keystone => {
-      createCompanyList(keystone);
-      createLocationList(keystone);
+      keystone.createList('User', {
+        fields: {
+          name: { type: Text },
+          friends: { type: Relationship, ref: 'User.friendOf', many: true },
+          friendOf: { type: Relationship, ref: 'User.friends' },
+        },
+      });
     };
     const createListsRL = keystone => {
-      createLocationList(keystone);
-      createCompanyList(keystone);
+      keystone.createList('User', {
+        fields: {
+          name: { type: Text },
+          friendOf: { type: Relationship, ref: 'User.friends' },
+          friends: { type: Relationship, ref: 'User.friendOf', many: true },
+        },
+      });
     };
 
     [
@@ -155,9 +145,9 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
                 ].map(async ([name, count]) => {
                   const { data } = await graphqlRequest({
                     keystone,
-                    query: `{ allLocations(where: { company: { name_contains: "${name}"}}) { id }}`,
+                    query: `{ allUsers(where: { friendOf: { name_contains: "${name}"}}) { id }}`,
                   });
-                  expect(data.allLocations.length).toEqual(count);
+                  expect(data.allUsers.length).toEqual(count);
                 })
               );
             })
@@ -175,9 +165,9 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
                 ].map(async ([name, count]) => {
                   const { data } = await graphqlRequest({
                     keystone,
-                    query: `{ allCompanies(where: { locations_some: { name: "${name}"}}) { id }}`,
+                    query: `{ allUsers(where: { friends_some: { name: "${name}"}}) { id }}`,
                   });
-                  expect(data.allCompanies.length).toEqual(count);
+                  expect(data.allUsers.length).toEqual(count);
                 })
               );
             })
@@ -188,16 +178,16 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
               await createReadData(keystone);
               await Promise.all(
                 [
-                  ['A', 2],
-                  ['B', 2],
-                  ['C', 2],
-                  ['D', 4],
+                  ['A', 2 + 6],
+                  ['B', 2 + 6],
+                  ['C', 2 + 6],
+                  ['D', 4 + 6],
                 ].map(async ([name, count]) => {
                   const { data } = await graphqlRequest({
                     keystone,
-                    query: `{ allCompanies(where: { locations_none: { name: "${name}"}}) { id }}`,
+                    query: `{ allUsers(where: { friends_none: { name: "${name}"}}) { id }}`,
                   });
-                  expect(data.allCompanies.length).toEqual(count);
+                  expect(data.allUsers.length).toEqual(count);
                 })
               );
             })
@@ -208,16 +198,16 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
               await createReadData(keystone);
               await Promise.all(
                 [
-                  ['A', 1],
-                  ['B', 1],
-                  ['C', 2],
-                  ['D', 1],
+                  ['A', 1 + 6],
+                  ['B', 1 + 6],
+                  ['C', 2 + 6],
+                  ['D', 1 + 6],
                 ].map(async ([name, count]) => {
                   const { data } = await graphqlRequest({
                     keystone,
-                    query: `{ allCompanies(where: { locations_every: { name: "${name}"}}) { id }}`,
+                    query: `{ allUsers(where: { friends_every: { name: "${name}"}}) { id }}`,
                   });
-                  expect(data.allCompanies.length).toEqual(count);
+                  expect(data.allUsers.length).toEqual(count);
                 })
               );
             })
@@ -234,25 +224,25 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
                 keystone,
                 query: `
                 mutation {
-                  createCompany(data: {
+                  createUser(data: {
                     locations: { connect: [{ id: "${location.id}" }] }
                   }) { id locations { id } }
                 }
             `,
               });
               expect(errors).toBe(undefined);
-              expect(data.createCompany.locations.map(({ id }) => id.toString())).toEqual([
+              expect(data.createUser.locations.map(({ id }) => id.toString())).toEqual([
                 location.id,
               ]);
 
-              const { Company, Location } = await getCompanyAndLocation(
+              const { Company, Location } = await getUserAndFriend(
                 keystone,
-                data.createCompany.id,
+                data.createUser.id,
                 location.id
               );
 
               // Everything should now be connected
-              expect(data.createCompany.locations.map(({ id }) => id.toString())).toEqual([
+              expect(data.createUser.locations.map(({ id }) => id.toString())).toEqual([
                 location.id,
               ]);
               expect(Location.company.id.toString()).toBe(Company.id.toString());
@@ -267,7 +257,7 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
                 keystone,
                 query: `
                 mutation {
-                  createCompany(data: {
+                  createUser(data: {
                     locations: { create: [{ name: "${locationName}" }] }
                   }) { id locations { id } }
                 }
@@ -275,10 +265,10 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
               });
               expect(errors).toBe(undefined);
 
-              const { Company, Location } = await getCompanyAndLocation(
+              const { Company, Location } = await getUserAndFriend(
                 keystone,
-                data.createCompany.id,
-                data.createCompany.locations[0].id
+                data.createUser.id,
+                data.createUser.locations[0].id
               );
 
               // Everything should now be connected
@@ -300,7 +290,7 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
                 keystone,
                 query: `
                 mutation {
-                  createCompany(data: {
+                  createUser(data: {
                     locations: { create: [{ name: "${locationName}" company: { connect: { id: "${company.id}" } } }] }
                   }) { id locations { id company { id } } }
                 }
@@ -308,10 +298,10 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
               });
               expect(errors).toBe(undefined);
 
-              const { Company, Location } = await getCompanyAndLocation(
+              const { Company, Location } = await getUserAndFriend(
                 keystone,
-                data.createCompany.id,
-                data.createCompany.locations[0].id
+                data.createUser.id,
+                data.createUser.locations[0].id
               );
 
               // Everything should now be connected
@@ -347,7 +337,7 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
                 keystone,
                 query: `
                 mutation {
-                  createCompany(data: {
+                  createUser(data: {
                     locations: { create: [{ name: "${locationName}" company: { create: { name: "${companyName}" } } }] }
                   }) { id locations { id company { id } } }
                 }
@@ -355,10 +345,10 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
               });
               expect(errors).toBe(undefined);
 
-              const { Company, Location } = await getCompanyAndLocation(
+              const { Company, Location } = await getUserAndFriend(
                 keystone,
-                data.createCompany.id,
-                data.createCompany.locations[0].id
+                data.createUser.id,
+                data.createUser.locations[0].id
               );
               // Everything should now be connected
               expect(Company.locations.map(({ id }) => id.toString())).toEqual([Location.id]);
@@ -388,68 +378,60 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
             'With connect',
             runner(setupKeystone, async ({ keystone }) => {
               // Manually setup a connected Company <-> Location
-              const { location, company } = await createCompanyAndLocation(keystone);
+              const { user, friend } = await createUserAndFriend(keystone);
 
               // Sanity check the links don't yet exist
               // `...not.toBe(expect.anything())` allows null and undefined values
-              expect(company.location).not.toBe(expect.anything());
-              expect(location.company).not.toBe(expect.anything());
+              expect(user.friends).not.toBe(expect.anything());
+              expect(friend.friendOf).not.toBe(expect.anything());
 
               const { errors } = await graphqlRequest({
                 keystone,
                 query: `
                 mutation {
-                  updateCompany(
-                    id: "${company.id}",
-                    data: { locations: { connect: [{ id: "${location.id}" }] } }
-                  ) { id locations { id } } }
+                  updateUser(
+                    id: "${user.id}",
+                    data: { friends: { connect: [{ id: "${friend.id}" }] } }
+                  ) { id friends { id } } }
             `,
               });
               expect(errors).toBe(undefined);
 
-              const { Company, Location } = await getCompanyAndLocation(
-                keystone,
-                company.id,
-                location.id
-              );
+              const { User, Friend } = await getUserAndFriend(keystone, user.id, friend.id);
               // Everything should now be connected
-              expect(Company.locations.map(({ id }) => id.toString())).toEqual([
-                Location.id.toString(),
-              ]);
-              expect(Location.company.id.toString()).toBe(Company.id.toString());
+              expect(User.friends.map(({ id }) => id.toString())).toEqual([Friend.id.toString()]);
+              expect(Friend.friendOf.id.toString()).toBe(User.id.toString());
             })
           );
 
           test(
             'With create',
             runner(setupKeystone, async ({ keystone }) => {
-              const { companies } = await createInitialData(keystone);
-              let company = companies[0];
-              const locationName = sampleOne(alphanumGenerator);
+              const { users } = await createInitialData(keystone);
+              let user = users[0];
+              const friendName = sampleOne(alphanumGenerator);
               const { data, errors } = await graphqlRequest({
                 keystone,
                 query: `
                 mutation {
-                  updateCompany(
-                    id: "${company.id}",
-                    data: { locations: { create: [{ name: "${locationName}" }] } }
-                  ) { id locations { id name } }
+                  updateUser(
+                    id: "${user.id}",
+                    data: { friends: { create: [{ name: "${friendName}" }] } }
+                  ) { id friends { id name } }
                 }
             `,
               });
               expect(errors).toBe(undefined);
 
-              const { Company, Location } = await getCompanyAndLocation(
+              const { User, Friend } = await getUserAndFriend(
                 keystone,
-                company.id,
-                data.updateCompany.locations[0].id
+                user.id,
+                data.updateUser.friends[0].id
               );
 
               // Everything should now be connected
-              expect(Company.locations.map(({ id }) => id.toString())).toEqual([
-                Location.id.toString(),
-              ]);
-              expect(Location.company.id.toString()).toBe(Company.id.toString());
+              expect(User.friends.map(({ id }) => id.toString())).toEqual([Friend.id.toString()]);
+              expect(Friend.friendOf.id.toString()).toBe(User.id.toString());
             })
           );
 
@@ -457,28 +439,28 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
             'With disconnect',
             runner(setupKeystone, async ({ keystone }) => {
               // Manually setup a connected Company <-> Location
-              const { location, company } = await createCompanyAndLocation(keystone);
+              const { user, friend } = await createUserAndFriend(keystone);
 
               // Run the query to disconnect the location from company
               const { data, errors } = await graphqlRequest({
                 keystone,
                 query: `
                 mutation {
-                  updateCompany(
-                    id: "${company.id}",
-                    data: { locations: { disconnect: [{ id: "${location.id}" }] } }
-                  ) { id locations { id name } }
+                  updateUser(
+                    id: "${user.id}",
+                    data: { friends: { disconnect: [{ id: "${friend.id}" }] } }
+                  ) { id friends { id name } }
                 }
             `,
               });
               expect(errors).toBe(undefined);
-              expect(data.updateCompany.id).toEqual(company.id);
-              expect(data.updateCompany.locations).toEqual([]);
+              expect(data.updateUser.id).toEqual(user.id);
+              expect(data.updateUser.friends).toEqual([]);
 
               // Check the link has been broken
-              const result = await getCompanyAndLocation(keystone, company.id, location.id);
-              expect(result.Company.locations).toEqual([]);
-              expect(result.Location.company).toBe(null);
+              const result = await getUserAndFriend(keystone, user.id, friend.id);
+              expect(result.User.friends).toEqual([]);
+              expect(result.Friend.friendOf).toBe(null);
             })
           );
 
@@ -486,28 +468,28 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
             'With disconnectAll',
             runner(setupKeystone, async ({ keystone }) => {
               // Manually setup a connected Company <-> Location
-              const { location, company } = await createCompanyAndLocation(keystone);
+              const { user, friend } = await createUserAndFriend(keystone);
 
               // Run the query to disconnect the location from company
               const { data, errors } = await graphqlRequest({
                 keystone,
                 query: `
                 mutation {
-                  updateCompany(
-                    id: "${company.id}",
-                    data: { locations: { disconnectAll: true } }
-                  ) { id locations { id name } }
+                  updateUser(
+                    id: "${user.id}",
+                    data: { friends: { disconnectAll: true } }
+                  ) { id friends { id name } }
                 }
             `,
               });
               expect(errors).toBe(undefined);
-              expect(data.updateCompany.id).toEqual(company.id);
-              expect(data.updateCompany.locations).toEqual([]);
+              expect(data.updateUser.id).toEqual(user.id);
+              expect(data.updateUser.friends).toEqual([]);
 
               // Check the link has been broken
-              const result = await getCompanyAndLocation(keystone, company.id, location.id);
-              expect(result.Company.locations).toEqual([]);
-              expect(result.Location.company).toBe(null);
+              const result = await getUserAndFriend(keystone, user.id, friend.id);
+              expect(result.User.friends).toEqual([]);
+              expect(result.Friend.friendOf).toBe(null);
             })
           );
         });
@@ -517,20 +499,20 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
             'delete',
             runner(setupKeystone, async ({ keystone }) => {
               // Manually setup a connected Company <-> Location
-              const { location, company } = await createCompanyAndLocation(keystone);
+              const { user, friend } = await createUserAndFriend(keystone);
 
               // Run the query to disconnect the location from company
               const { data, errors } = await graphqlRequest({
                 keystone,
-                query: `mutation { deleteCompany(id: "${company.id}") { id } } `,
+                query: `mutation { deleteUser(id: "${user.id}") { id } } `,
               });
               expect(errors).toBe(undefined);
-              expect(data.deleteCompany.id).toBe(company.id);
+              expect(data.deleteUser.id).toBe(user.id);
 
               // Check the link has been broken
-              const result = await getCompanyAndLocation(keystone, company.id, location.id);
-              expect(result.Company).toBe(null);
-              expect(result.Location.company).toBe(null);
+              const result = await getUserAndFriend(keystone, user.id, friend.id);
+              expect(result.User).toBe(null);
+              expect(result.Friend.friendOf).toBe(null);
             })
           );
         });
