@@ -21,6 +21,7 @@ const {
   validateFieldAccessControl,
   validateListAccessControl,
   validateCustomAccessControl,
+  validateAuthAccessControl,
 } = require('@k5js/access-control');
 const { startAuthedSession, endAuthedSession, commonSessionMiddleware } = require('@k5js/session');
 
@@ -121,11 +122,13 @@ module.exports = class Keystone {
     let getCustomAccessControlForUser;
     let getListAccessControlForUser;
     let getFieldAccessControlForUser;
+    let getAuthAccessControlForUser;
 
     if (skipAccessControl) {
       getCustomAccessControlForUser = () => true;
       getListAccessControlForUser = () => true;
       getFieldAccessControlForUser = () => true;
+      getAuthAccessControlForUser = () => true;
     } else {
       // memoizing to avoid requests that hit the same type multiple times.
       // We do it within the request callback so we can resolve it based on the
@@ -175,6 +178,15 @@ module.exports = class Keystone {
           });
         }
       );
+
+      getAuthAccessControlForUser = fastMemoize((listKey, { gqlName } = {}) => {
+        return validateAuthAccessControl({
+          access: this.lists[listKey].access[schemaName],
+          authentication: { item: req.user, listKey: req.authedListKey },
+          listKey,
+          gqlName,
+        });
+      });
     }
 
     return {
@@ -187,6 +199,7 @@ module.exports = class Keystone {
       getCustomAccessControlForUser,
       getListAccessControlForUser,
       getFieldAccessControlForUser,
+      getAuthAccessControlForUser,
       totalResults: 0,
       maxTotalResults: this.queryLimits.maxTotalResults,
     };
@@ -229,6 +242,7 @@ module.exports = class Keystone {
         passThroughContext.getCustomAccessControlForUser = () => true;
         passThroughContext.getListAccessControlForUser = () => true;
         passThroughContext.getFieldAccessControlForUser = () => true;
+        passThroughContext.getAuthAccessControlForUser = () => true;
       }
 
       const graphQLQuery = this._graphQLQuery[passThroughContext.schemaName];
