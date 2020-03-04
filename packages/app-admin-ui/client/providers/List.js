@@ -38,3 +38,19 @@ export const ListProvider = ({ list, children }) => {
     </ListContext.Provider>
   );
 };
+
+const ListDataContext = createContext();
+export const useListData = () => useContext(ListDataContext);
+
+export const ListDataProvider = ({ query, items, selectedItems, onSelectChange, children }) => (
+  <ListDataContext.Provider
+    value={{
+      query,
+      items,
+      selectedItems,
+      onSelectChange,
+    }}
+  >
+    {children}
+  </ListDataContext.Provider>
+);
