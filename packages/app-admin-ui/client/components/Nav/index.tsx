@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import React, { useState } from 'react'; // eslint-disable-line no-unused-vars
-import { Route, Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import PropToggle from 'react-prop-toggle';
 import { uid } from 'react-uid';
 import styled from '@emotion/styled';
@@ -241,6 +241,8 @@ function PrimaryNavItems({
   listKeys,
   mouseIsOverNav,
 }) {
+  const isAtDashboard = useRouteMatch({ path: adminPath, exact: true });
+
   let hasRenderedIndexPage = false;
   const onRenderIndexPage = () => {
     hasRenderedIndexPage = true;
@@ -273,27 +275,23 @@ function PrimaryNavItems({
         );
   return (
     <Relative>
-      <Route>
-        {({ location }) => (
-          <ScrollQuery isPassive={false}>
-            {(ref, snapshot) => (
-              <PrimaryNavScrollArea ref={ref} {...snapshot}>
-                {hasRenderedIndexPage === false && (
-                  <PrimaryNavItem
-                    to={adminPath}
-                    isSelected={location.pathname === adminPath}
-                    mouseIsOverNav={mouseIsOverNav}
-                  >
-                    Dashboard
-                  </PrimaryNavItem>
-                )}
-
-                {pageNavItems}
-              </PrimaryNavScrollArea>
+      <ScrollQuery isPassive={false}>
+        {(ref, snapshot) => (
+          <PrimaryNavScrollArea ref={ref} {...snapshot}>
+            {hasRenderedIndexPage === false && (
+              <PrimaryNavItem
+                to={adminPath}
+                isSelected={isAtDashboard}
+                mouseIsOverNav={mouseIsOverNav}
+              >
+                Dashboard
+              </PrimaryNavItem>
             )}
-          </ScrollQuery>
+
+            {pageNavItems}
+          </PrimaryNavScrollArea>
         )}
-      </Route>
+      </ScrollQuery>
     </Relative>
   );
 }

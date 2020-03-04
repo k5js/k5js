@@ -32,6 +32,8 @@ import Management, { ManageToolbar } from './Management';
 import { useListFilter, useListSelect, useListSort, useListUrlState } from './dataHooks';
 import ListType from '../../classes/List';
 
+import { useAdminMeta } from '../../providers/AdminMeta';
+
 const HeaderInset = props => (
   <div css={{ paddingLeft: gridSize * 2, paddingRight: gridSize * 2 }} {...props} />
 );
@@ -45,17 +47,18 @@ type LayoutProps = Props & {
   items: object[];
   itemCount: number;
   queryErrors: object[];
+  query: $TSFixMe;
 };
 
 export function ListLayout(props: LayoutProps) {
-  const { adminMeta, items, itemCount, queryErrors, routeProps, query } = props;
+  const { items, itemCount, queryErrors, routeProps, query } = props;
   const measureElementRef = useRef();
   const { list, openCreateItemModal } = useList();
   const { urlState } = useListUrlState(list.key);
   const { filters } = useListFilter(list.key);
   const [sortBy, handleSortChange] = useListSort(list.key);
 
-  const { adminPath } = adminMeta;
+  const { adminPath } = useAdminMeta();
   const { history, location } = routeProps;
   const { currentPage, fields, pageSize, search } = urlState;
 
