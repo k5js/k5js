@@ -410,14 +410,18 @@ module.exports = class Keystone {
           ? `${left.listKey}_${left.path}_${right.listKey}_${right.path}`
           : `${left.listKey}_${left.path}_many`;
         if (right) {
+          const leftKey = `${left.listKey}.${left.path}`;
+          const rightKey = `${right.listKey}.${right.path}`;
           rel.columnNames = {
-            [left.listKey]: { near: `${left.listKey}_id`, far: `${right.listKey}_id` },
-            [right.listKey]: { near: `${right.listKey}_id`, far: `${left.listKey}_id` },
+            [leftKey]: { near: `${left.listKey}_left_id`, far: `${right.listKey}_right_id` },
+            [rightKey]: { near: `${right.listKey}_right_id`, far: `${left.listKey}_left_id` },
           };
         } else {
+          const leftKey = `${left.listKey}.${left.path}`;
+          const rightKey = `${left.config.ref}`;
           rel.columnNames = {
-            [left.listKey]: { near: `${left.listKey}_id`, far: `${left.config.ref}_id` },
-            [left.config.ref]: { near: `${left.config.ref}_id`, far: `${left.listKey}_id` },
+            [leftKey]: { near: `${left.listKey}_left_id`, far: `${left.config.ref}_right_id` },
+            [rightKey]: { near: `${left.config.ref}_right_id`, far: `${left.listKey}_left_id` },
           };
         }
       } else if (cardinality === '1:1') {

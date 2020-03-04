@@ -104,10 +104,10 @@ class KnexAdapter extends BaseKeystoneAdapter {
     }
 
     const fkResult = [];
-    await asyncForEach(keystone.rels, async ({ left, right, cardinality, tableName }) => {
+    await asyncForEach(keystone.rels, async ({ left, right, cardinality, tableName, columnNames }) => {
       try {
         if (cardinality === 'N:N') {
-          await this._createAdjacencyTable({ left, tableName });
+          await this._createAdjacencyTable({ left, tableName, columnNames });
         } else if (cardinality === '1:N') {
           // create a FK on the right
           await this.schema().table(right.listKey, table => {
@@ -141,7 +141,7 @@ class KnexAdapter extends BaseKeystoneAdapter {
     return fkResult;
   }
 
-  async _createAdjacencyTable({ left, tableName }) {
+  async _createAdjacencyTable({ left, tableName, columnNames }) {
     // Create an adjacency table for the (many to many) relationship field adapter provided
     const dbAdapter = this;
     try {
@@ -156,13 +156,16 @@ class KnexAdapter extends BaseKeystoneAdapter {
     }
 
     // To be clear..
+    const columnKey = `${left.listKey}.${left.path}`;
+    // console.log({ columnKey });
+    // console.log(columnNames[columnKey]);
     const leftListAdapter = left.adapter.listAdapter;
     const leftPkFa = leftListAdapter.getPrimaryKeyAdapter();
-    const leftFkPath = `${leftListAdapter.key}_${leftPkFa.path}`;
+    const leftFkPath = columnNames[columnKey].near;
 
     const rightListAdapter = dbAdapter.getListAdapterByKey(left.adapter.refListKey);
     const rightPkFa = rightListAdapter.getPrimaryKeyAdapter();
-    const rightFkPath = `${rightListAdapter.key}_${rightPkFa.path}`;
+    const rightFkPath = columnNames[columnKey].far;
 
     // So right now, apparently, `many: true` indicates many-to-many
     // It's not clear how isUnique would be configured at the moment
@@ -331,7 +334,7 @@ class KnexListAdapter extends BaseListAdapter {
 
   ////////// Mutations //////////
 
-  async _createOrUpdateField({ value, adapter, itemId }) {
+  async _createOrUpdateField({ path, value, adapter, itemId }) {
     const { tableName, columnName, cardinality, columnNames } = adapter.rel;
     // N:N - put it in the many table
     // 1:N - put it in the FK col of the other table
@@ -350,9 +353,11 @@ class KnexListAdapter extends BaseListAdapter {
       const values = value; // Rename this because we have a many situation
       if (values.length) {
         if (cardinality === 'N:N') {
-          // FIXME: think about uniqueness of the pair of keys
-          const itemCol = columnNames[this.key].near;
-          const otherCol = columnNames[this.key].far;
+          const columnKey = `${this.key}.${path}`;
+          // console.log({ columnKey });
+          // console.log(columnNames[columnKey]);
+          const itemCol = columnNames[columnKey].near;
+          const otherCol = columnNames[columnKey].far;
           return this._query()
             .insert(values.map(id => ({ [itemCol]: itemId, [otherCol]: id })))
             .into(tableName)
@@ -385,8 +390,8 @@ class KnexListAdapter extends BaseListAdapter {
     )[0];
 
     // For every non-real-field, update the corresponding FK/join table.
-    const manyItem = await this._processNonRealFields(data, async ({ value, adapter }) =>
-      this._createOrUpdateField({ value, adapter, itemId: item.id })
+    const manyItem = await this._processNonRealFields(data, async ({ path, value, adapter }) =>
+      this._createOrUpdateField({ path, value, adapter, itemId: item.id })
     );
 
     // This currently over-populates the returned item.
@@ -397,6 +402,7 @@ class KnexListAdapter extends BaseListAdapter {
   }
 
   async _update(id, data) {
+    // console.log('UPDATE', {id, data });
     const realData = pick(data, this.realKeys);
 
     // Unset any real 1:1 fields
@@ -412,7 +418,7 @@ class KnexListAdapter extends BaseListAdapter {
     const item = (await query.returning(['id', ...this.realKeys]))[0];
 
     // For every many-field, update the many-table
-    await this._processNonRealFields(data, async ({ value: newValues, adapter }) => {
+    await this._processNonRealFields(data, async ({ path, value: newValues, adapter }) => {
       const { cardinality, columnName, tableName, columnNames } = adapter.rel;
       let value;
       // Future task: Is there some way to combine the following three
@@ -420,8 +426,11 @@ class KnexListAdapter extends BaseListAdapter {
 
       if (cardinality !== '1:1') {
         // Work out what we've currently got
-        const selectCol = cardinality === 'N:N' ? columnNames[this.key].far : 'id';
-        const matchCol = cardinality === 'N:N' ? columnNames[this.key].near : columnName;
+        const columnKey = `${this.key}.${path}`;
+        // console.log({ columnKey });
+        // console.log(columnNames[columnKey]);
+        const matchCol = cardinality === 'N:N' ? columnNames[columnKey].near : columnName;
+        const selectCol = cardinality === 'N:N' ? columnNames[columnKey].far : 'id';
         const currentRefIds = (
           await this._query()
             .select(selectCol)
@@ -450,16 +459,21 @@ class KnexListAdapter extends BaseListAdapter {
       } else {
         // If there are values, update the other side to point to me,
         // otherwise, delete the thing that was pointing to me
+        // console.log({ newValues });
+        // console.log(adapter.rel);
+        // console.log(path);
+        const selectCol = columnName === path? 'id' : columnName;
         if (newValues === null) {
           await this._query()
             .table(tableName)
-            .where('id', item.id) // Is this right?!?!
+            .where(selectCol, item.id) // Is this right?!?!
             .update({ [columnName]: null });
         }
         value = newValues;
       }
-      await this._createOrUpdateField({ value, adapter, itemId: item.id });
+      await this._createOrUpdateField({ path, value, adapter, itemId: item.id });
     });
+    // console.log('RETURN QUERY');
     return (await this._itemsQuery({ where: { id: item.id }, first: 1 }))[0] || null;
   }
 
@@ -474,12 +488,18 @@ class KnexListAdapter extends BaseListAdapter {
             .filter(
               a => a.isRelationship && a.refListKey === this.key && a.rel.tableName !== this.key
             ) // If I (a list adapter) an implicated in the .rel of this field adapter
-            .map(({ rel }) => {
+            .map(({ rel, path, listAdapter }) => {
               const { cardinality, columnName, tableName, columnNames } = rel;
               if (cardinality === 'N:N') {
+                // FIXME: There is a User <-> User case which isn't captured here.
+                // console.log(other);
+                const columnKey = `${listAdapter.key}.${path}`;
+                // console.log({ columnKey });
+                // console.log({ columnNames });
+                // console.log(columnNames[columnKey]);
                 return this._query()
                   .table(tableName)
-                  .where(columnNames[this.key].near, id)
+                  .where(columnNames[columnKey].near, id)
                   .del();
               } else {
                 return this._query()
@@ -501,9 +521,24 @@ class KnexListAdapter extends BaseListAdapter {
   ////////// Queries //////////
 
   async _itemsQuery(args, { meta = false, from = {} } = {}) {
+    // const x = await this._schema().raw('select * from "public"."User"');
+    // console.log('x', x.rows);
+
+    // const y = await this._schema().raw(`select "t1"."friendOf" from "public"."User" as "t1" where true and ("t1"."name" = 'C')`);
+    // console.log('y', y.rows);
+
+    // const z = await this._schema().raw(`select "t0".* from "public"."User" as "t0" where true and ("t0"."id" not in (select "t1"."friendOf" from "public"."User" as "t1" where true and ("t1"."name" = 'C') and ("t1"."friendOf" is not NULL)))`);
+    // console.log('z', z.rows);
+    // const yy = await this._schema().raw('select * from "public"."User_friends_many" as "t1" inner join "public"."User" as "t1__friends" on "t1__friends"."id" = "t1"."User_right_id" where true');
+    // console.log('yy', yy.rows);
+
+    // const xx = await this._schema().raw('select "t1"."User_left_id" from "public"."User_friends_many" as "t1" inner join "public"."User" as "t1__friends" on "t1__friends"."id" = "t1"."User_right_id" where true');
+    // console.log('xx', xx.rows);
+    // console.log('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+    // console.log({ args });
     const query = new QueryBuilder(this, args, { meta, from }).get();
     const results = await query;
-
+    // console.log({ results });
     if (meta) {
       const { first, skip } = args;
       const ret = results[0];
@@ -547,23 +582,29 @@ class QueryBuilder {
       this._query.column(`${baseTableAlias}.*`);
     }
 
+    // console.log('1. Add joins');
     this._addJoins(this._query, listAdapter, where, baseTableAlias);
 
-    // Joins/where to effectively translate us unto a different list
+    // Joins/where to effectively translate us onto a different list
     if (Object.keys(from).length) {
+      // console.log('2. Add from join');
       const a = from.fromList.adapter.fieldAdaptersByPath[from.fromField];
       const { cardinality, tableName, columnName, columnNames } = a.rel;
       const otherTableAlias = this._getNextBaseTableAlias();
 
       if (cardinality === 'N:N') {
-        const { near, far } = columnNames[listAdapter.key];
+        const columnKey = `${from.fromList.adapter.key}.${a.path}`;
+        // console.log({ columnKey });
+        // console.log({ columnNames });
+        // console.log(columnNames[columnKey]);
+        const { near, far } = columnNames[columnKey];
         this._query.leftOuterJoin(
           `${tableName} as ${otherTableAlias}`,
-          `${otherTableAlias}.${near}`,
+          `${otherTableAlias}.${far}`,
           `${baseTableAlias}.id`
         );
         this._query.whereRaw('true');
-        this._query.andWhere(`${otherTableAlias}.${far}`, `=`, from.fromId);
+        this._query.andWhere(`${otherTableAlias}.${near}`, `=`, from.fromId);
       } else {
         this._query.leftOuterJoin(
           `${tableName} as ${otherTableAlias}`,
@@ -579,6 +620,7 @@ class QueryBuilder {
       this._query.whereRaw('true');
     }
 
+    // console.log('3. Add wheres');
     this._addWheres(w => this._query.andWhere(w), listAdapter, where, baseTableAlias);
 
     // TODO: Implement configurable search fields for lists
@@ -640,10 +682,12 @@ class QueryBuilder {
     listAdapter.fieldAdapters
       .filter(a => a.isRelationship && a.rel.cardinality === '1:1' && a.rel.right === a.field)
       .forEach(a => {
+        // console.log('1.a. 1:1 Joins');
         const { tableName, columnName } = a.rel;
         const otherTableAlias = `${tableAlias}__${a.path}_11`;
         if (!this._tableAliases[otherTableAlias]) {
           this._tableAliases[otherTableAlias] = true;
+          // LEFT OUTERJOIN on ... table>.<id> = <otherTable>.<columnName> SELECT <othertable>.<id> as <path>
           query
             .leftOuterJoin(
               `${tableName} as ${otherTableAlias}`,
@@ -660,6 +704,7 @@ class QueryBuilder {
     for (let path of joinPaths) {
       if (path === 'AND' || path === 'OR') {
         // AND/OR we need to traverse their children
+        // console.log('1.b AND/OR joins');
         where[path].forEach(x => this._addJoins(query, listAdapter, x, tableAlias));
       } else {
         const otherAdapter = listAdapter.fieldAdaptersByPath[path];
@@ -675,6 +720,7 @@ class QueryBuilder {
           const otherListAdapter = listAdapter.getListAdapterByKey(otherList);
           const otherTableAlias = `${tableAlias}__${path}`;
           if (!this._tableAliases[otherTableAlias]) {
+            // console.log('1.c some/every/none join');
             this._tableAliases[otherTableAlias] = true;
             query.leftOuterJoin(
               `${otherListAdapter.tableName} as ${otherTableAlias}`,
@@ -682,6 +728,7 @@ class QueryBuilder {
               `${tableAlias}.${path}`
             );
           }
+          // console.log('1.d recursive join');
           this._addJoins(query, otherListAdapter, where[path], otherTableAlias);
         }
       }
@@ -694,8 +741,10 @@ class QueryBuilder {
     for (let path of Object.keys(where)) {
       const condition = this._getQueryConditionByPath(listAdapter, path, tableAlias);
       if (condition) {
+        // console.log('3.a Simple condition');
         whereJoiner(condition(where[path]));
       } else if (path === 'AND' || path === 'OR') {
+        // console.log('3.b AND/OR condition');
         whereJoiner(q => {
           // AND/OR need to traverse both side of the query
           let subJoiner;
@@ -715,10 +764,12 @@ class QueryBuilder {
         const fieldAdapter = listAdapter.fieldAdaptersByPath[path];
         if (fieldAdapter) {
           // Non-many relationship. Traverse the sub-query, using the referenced list as a root.
+          // console.log('3.c Non-many relationship recursion');
           const otherListAdapter = listAdapter.getListAdapterByKey(fieldAdapter.refListKey);
           this._addWheres(whereJoiner, otherListAdapter, where[path], `${tableAlias}__${path}`);
         } else {
           // Many relationship
+          // console.log('3.d Many relationship');
           const [p, constraintType] = path.split('_');
           const { rel } = listAdapter.fieldAdaptersByPath[p];
           const { cardinality, tableName, columnName, columnNames } = rel;
@@ -728,19 +779,25 @@ class QueryBuilder {
           const subQuery = listAdapter._query();
           let otherTableAlias;
           if (cardinality === '1:N' || cardinality === 'N:1') {
+            // console.log('3.d.i 1:N');
             otherTableAlias = subBaseTableAlias;
             subQuery
               .select(`${subBaseTableAlias}.${columnName}`)
               .from(`${tableName} as ${subBaseTableAlias}`);
+            subQuery.whereNotNull(columnName);
           } else {
+            // console.log('3.d.ii N:N');
+            const columnKey = `${listAdapter.key}.${p}`;
+            // console.log({ columnKey });
+            // console.log(columnNames[columnKey]);
             otherTableAlias = `${subBaseTableAlias}__${p}`;
             subQuery
-              .select(`${subBaseTableAlias}.${columnNames[listAdapter.key].near}`)
+              .select(`${subBaseTableAlias}.${columnNames[columnKey].near}`)
               .from(`${tableName} as ${subBaseTableAlias}`);
             subQuery.innerJoin(
               `${otherListAdapter.tableName} as ${otherTableAlias}`,
               `${otherTableAlias}.id`,
-              `${subBaseTableAlias}.${columnNames[listAdapter.key].far}`
+              `${subBaseTableAlias}.${columnNames[columnKey].far}`,
             );
           }
           this._addJoins(subQuery, otherListAdapter, where[path], otherTableAlias);
@@ -765,6 +822,13 @@ class QueryBuilder {
               otherTableAlias
             );
           }
+          // We need to filter out nulls before passing back to the top level query
+          // otherwise postgres will give very incorrect answers.
+
+          // FIXME: Think about whether this makes any sense at all or whether it
+          // only applies to some of our conditions...?
+          // Only applies sometimes, it would seem,,,
+          // subQuery.whereNotNull(columnName);
 
           if (constraintType === 'some') {
             whereJoiner(q => q.whereIn(`${tableAlias}.id`, subQuery));

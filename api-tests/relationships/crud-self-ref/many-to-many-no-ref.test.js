@@ -71,15 +71,15 @@ const createReadData = async keystone => {
   const { createUsers } = data;
   await Promise.all(
     [
-      [0, 1, 2, 3, 4, 5], //  -> [A, A, B, B, C, C]
-      // [0, 2, 4], //  -> [A, B, C]
-      // [0, 1], //  -> [A, A]
-      // [0, 2], //  -> [A, B]
-      // [0, 4], //  -> [A, C]
-      // [2, 3], //  -> [B, B]
-      // [0], //  -> [A]
-      // [2], //  -> [B]
-      // [], //  -> []
+      [0, 1, 2, 3, 4, 5], //  -> (A1) -> [A, A, B, B, C, C]
+      [0, 2, 4], //  -> (A2) -> [A, B, C]
+      [0, 1], //  -> (B1) -> [A, A]
+      [0, 2], //  -> (B2) -> [A, B]
+      [0, 4], //  ->  (C1) -> [A, C]
+      [2, 3], //  ->  (C2) -> [B, B]
+      [0], //  -> (D1) -> [A]
+      [2], //  -> (D2) -> [B]
+      [], //  ->  (E1) -> []
     ].map(async (locationIdxs, j) => {
       const ids = locationIdxs.map(i => ({ id: createUsers[i].id }));
       const { data, errors } = await graphqlRequest({
@@ -89,8 +89,6 @@ const createReadData = async keystone => {
   }) { id friends { name }}}`,
         variables: { friends: ids, user: createUsers[j].id },
       });
-      console.log({ errors });
-      console.log(data.updateUser);
       return data.updateUser;
     })
   );
@@ -130,9 +128,9 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
             await Promise.all(
               [
                 ['A', 6],
-                // ['B', 5],
-                // ['C', 3],
-                // ['D', 0],
+                ['B', 5],
+                ['C', 3],
+                ['D', 0],
               ].map(async ([name, count]) => {
                 const { data } = await graphqlRequest({
                   keystone,
