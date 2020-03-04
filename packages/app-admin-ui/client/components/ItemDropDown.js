@@ -11,7 +11,7 @@ import DeleteItemModal from './DeleteItemModal';
 import { useListData, useList } from '../providers/List';
 import { useItem } from '../providers/Item';
 
-const ItemDropDown = () => {
+const ItemDropDown = ({ useCopy = true, useDelete = true, items: additionalItems = [] }) => {
   const [deleteModalIsVisible, setDeleteModal] = useState(false);
   const { query, linkFn: link } = useListData();
   const item = useItem();
@@ -25,16 +25,25 @@ const ItemDropDown = () => {
   };
 
   const items = [
-    {
-      content: 'Copy Link',
-      icon: <LinkIcon />,
-      onClick: () => copyToClipboard(copyText),
-    },
-    {
-      content: 'Delete',
-      icon: <TrashcanIcon />,
-      onClick: () => setDeleteModal(true),
-    },
+    ...(useCopy
+      ? [
+          {
+            content: 'Copy Link',
+            icon: <LinkIcon />,
+            onClick: () => copyToClipboard(copyText),
+          },
+        ]
+      : []),
+    ...(useDelete
+      ? [
+          {
+            content: 'Delete',
+            icon: <TrashcanIcon />,
+            onClick: () => setDeleteModal(true),
+          },
+        ]
+      : []),
+    ...additionalItems,
   ];
   return (
     <Fragment>
