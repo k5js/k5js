@@ -42,13 +42,21 @@ export const ListProvider = ({ list, children }) => {
 const ListDataContext = createContext();
 export const useListData = () => useContext(ListDataContext);
 
-export const ListDataProvider = ({ query, items, selectedItems, onSelectChange, children }) => (
+export const ListDataProvider = ({
+  query,
+  items,
+  selectedItems,
+  onSelectChange,
+  children,
+  ...value
+}) => (
   <ListDataContext.Provider
     value={{
       query,
       items,
       selectedItems,
       onSelectChange,
+      ...value,
     }}
   >
     {children}

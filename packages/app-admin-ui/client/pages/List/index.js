@@ -51,6 +51,8 @@ export function ListLayout(props) {
 
   const { listHeaderActions } = useUIHooks();
 
+  const linkFn = ({ path, item }) => `${adminPath}/${path}/${item.id}`;
+
   // Mount with Persisted Search
   // ------------------------------
   useEffect(() => {
@@ -89,7 +91,7 @@ export function ListLayout(props) {
 
   const Render = ({ children }) => children();
   return (
-    <ListDataProvider {...{ query, items, selectedItems, onSelectChange }}>
+    <ListDataProvider {...{ query, items, selectedItems, onSelectChange, linkFn }}>
       <main>
         <div ref={measureElementRef} />
 
@@ -219,6 +221,7 @@ export function ListLayout(props) {
                 )}
               />
             }
+            itemLink={linkFn}
             fields={fields}
             handleSortChange={handleSortChange}
             isFullWidth
