@@ -11,7 +11,15 @@ import { Button } from '@arch-ui/button';
 import { EyeIcon, LockIcon } from '@arch-ui/icons';
 import { A11yText } from '@arch-ui/typography';
 
-const PasswordField = ({ onChange, autoFocus, field, value: serverValue, errors, warnings }) => {
+const PasswordField = ({
+  onChange,
+  autoFocus,
+  field,
+  value: serverValue,
+  errors,
+  warnings,
+  isReadOnly,
+}) => {
   const focusTarget = useRef();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -73,6 +81,7 @@ const PasswordField = ({ onChange, autoFocus, field, value: serverValue, errors,
               placeholder="New Password"
               type={showInputValue ? 'text' : 'password'}
               value={inputPassword}
+              disabled={isReadOnly}
             />
             <Input
               autoComplete="off"
@@ -83,19 +92,26 @@ const PasswordField = ({ onChange, autoFocus, field, value: serverValue, errors,
               placeholder="Confirm Password"
               type={showInputValue ? 'text' : 'password'}
               value={inputConfirm}
+              disabled={isReadOnly}
             />
             <Button
               isActive={showInputValue}
               onClick={toggleMode}
               title={showInputValue ? 'Hide Text' : 'Show Text'}
               variant="ghost"
+              isDisabled={isReadOnly}
             >
               <A11yText>{showInputValue ? 'Hide Text' : 'Show Text'}</A11yText>
               <div css={{ width: 20 }}>{showInputValue ? <LockIcon /> : <EyeIcon />}</div>
             </Button>
           </FlexGroup>
         ) : (
-          <Button id={`${htmlID}-button`} onClick={toggleInterface} variant="ghost">
+          <Button
+            id={`${htmlID}-button`}
+            onClick={toggleInterface}
+            variant="ghost"
+            isDisabled={isReadOnly}
+          >
             {value ? 'Update Password' : 'Set Password'}
           </Button>
         )}

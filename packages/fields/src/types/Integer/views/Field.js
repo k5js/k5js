@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { FieldContainer, FieldLabel, FieldDescription, FieldInput } from '@arch-ui/fields';
+import {
+  FieldContainer,
+  FieldLabel,
+  FieldDescription,
+  FieldInput,
+  isReadOnly,
+} from '@arch-ui/fields';
 import { Input } from '@arch-ui/input';
 
 const TextField = ({ onChange, autoFocus, field, value, errors }) => {
@@ -35,6 +41,7 @@ const TextField = ({ onChange, autoFocus, field, value, errors }) => {
           value={valueToString(value)}
           onChange={handleChange}
           id={htmlID}
+          disabled={isReadOnly}
         />
       </FieldInput>
     </FieldContainer>
