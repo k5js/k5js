@@ -25,6 +25,7 @@ const SelectFilterView = ({ innerRef, field, value, onChange }) => {
   };
 
   const handleSelectChange = newValue => {
+    if (newValue.length == 0) return;
     const options = [].concat(newValue); // ensure consistent data shape
     onChange({ ...value, options });
   };
@@ -37,6 +38,7 @@ const SelectFilterView = ({ innerRef, field, value, onChange }) => {
     options: field.options,
     placeholder: 'Select...',
     value: value.options,
+    isMulti: true,
   };
 
   return (
