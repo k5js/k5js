@@ -1,5 +1,11 @@
 # @keystonejs/website
 
+## 5.1.2
+
+### Patch Changes
+
+- [`9ada31d5`](https://github.com/keystonejs/keystone/commit/9ada31d559707f5a54ccdaf2df75c3dc958a9cca) [#2477](https://github.com/keystonejs/keystone/pull/2477) Thanks [@Vultraz](https://github.com/Vultraz)! - Made main doc section headers larger.
+
 ## 5.1.1
 
 ### Patch Changes

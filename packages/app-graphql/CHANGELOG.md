@@ -1,5 +1,11 @@
 # @keystonejs/app-graphql
 
+## 5.1.2
+
+### Patch Changes
+
+- [`10e88dc3`](https://github.com/keystonejs/keystone/commit/10e88dc3d81f5e021db0bfb31f7547852c602c14) [#2468](https://github.com/keystonejs/keystone/pull/2468) Thanks [@timleslie](https://github.com/timleslie)! - Removed `Keystone.getAdminSchema` in favour of a new `Keystone.getResolvers({ schemaName })` method, along with the pre-existing `Keystone.getTypeDefs({ schemaName })`.
+
 ## 5.1.1
 
 ### Patch Changes

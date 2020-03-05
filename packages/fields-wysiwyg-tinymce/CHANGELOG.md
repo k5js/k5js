@@ -1,5 +1,18 @@
 # @keystonejs/fields-wysiwyg-tinymce
 
+## 5.2.0
+
+### Minor Changes
+
+- [`aa6cd8f4`](https://github.com/keystonejs/keystone/commit/aa6cd8f4c5947fe9525350bb99253acc0716af0a) [#2449](https://github.com/keystonejs/keystone/pull/2449) Thanks [@Vultraz](https://github.com/Vultraz)! - Added an `editorConfig` field option that can be used to configure the TinyMCE editor.
+
+* [`479fa2e9`](https://github.com/keystonejs/keystone/commit/479fa2e9bbee6e20ae3d541471af8bf4ecbac859) [#2448](https://github.com/keystonejs/keystone/pull/2448) Thanks [@Vultraz](https://github.com/Vultraz)! - Switched to official TinyMCE React integration.
+
+### Patch Changes
+
+- Updated dependencies [[`8aa42fae`](https://github.com/keystonejs/keystone/commit/8aa42fae79d4a63a74d4a0f1e3ac6c74fae6885b)]:
+  - @keystonejs/build-field-types@5.2.2
+
 ## 5.1.1
 
 ### Patch Changes

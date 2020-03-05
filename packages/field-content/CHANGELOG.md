@@ -1,5 +1,16 @@
 # @keystonejs/field-content
 
+## 5.4.2
+
+### Patch Changes
+
+- [`ca4d2178`](https://github.com/keystonejs/keystone/commit/ca4d217878c6e3829ed0c7a7e7a1909095a2eb7d) [#2464](https://github.com/keystonejs/keystone/pull/2464) Thanks [@MadeByMike](https://github.com/MadeByMike)! - Changed the min-height of the content field. Changed the UI so the blocks menu doesn't appear if there are not blocks configured.
+
+* [`70f2101a`](https://github.com/keystonejs/keystone/commit/70f2101ab8dd57615800f11df5b72b8fedb09298) [#2458](https://github.com/keystonejs/keystone/pull/2458) Thanks [@SeanDoyleGit](https://github.com/SeanDoyleGit)! - Changed the `deserialize` method of the content field to filter out missing oEmbeds
+
+* Updated dependencies [[`8aa42fae`](https://github.com/keystonejs/keystone/commit/8aa42fae79d4a63a74d4a0f1e3ac6c74fae6885b)]:
+  - @keystonejs/build-field-types@5.2.2
+
 ## 5.4.1
 
 ### Patch Changes

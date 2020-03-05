@@ -1,5 +1,27 @@
 # @keystonejs/app-admin-ui
 
+## 5.9.1
+
+### Patch Changes
+
+- [`5dea5561`](https://github.com/keystonejs/keystone/commit/5dea5561527a4e991d017d087f512101d53256b9) [#2478](https://github.com/keystonejs/keystone/pull/2478) Thanks [@gautamsi](https://github.com/gautamsi)! - Refactored `itemHeaderAction` to export components instead of passing as parameter.
+
+* [`d7c7d827`](https://github.com/keystonejs/keystone/commit/d7c7d8271c5da8fec01df123c954d6a03aa41146) [#2347](https://github.com/keystonejs/keystone/pull/2347) Thanks [@singhArmani](https://github.com/singhArmani)! - While submitting a create list form inside Admin-UI, **null** was `explicit` in the `mutation` request for blank unedited fields.
+  This was preventing the knex DB-level default to be applied correctly.
+
+  But omitting the blank (unchanged) and required fields, we managed to completely exclude it while making graphql mutation request, and thus respecting the knew `defaultTo` option.
+
+- [`f0148ccb`](https://github.com/keystonejs/keystone/commit/f0148ccb03abb882195b9bd44c34b780170c89ef) [#2423](https://github.com/keystonejs/keystone/pull/2423) Thanks [@Vultraz](https://github.com/Vultraz)! - Fixed items being flagged as changed even if input did not differ.
+
+* [`6790d053`](https://github.com/keystonejs/keystone/commit/6790d053effba118d0b3a51806a5c066cf022d45) [#2460](https://github.com/keystonejs/keystone/pull/2460) Thanks [@Vultraz](https://github.com/Vultraz)! - Cleaned up handling of admin metadata.
+
+- [`6de20ce6`](https://github.com/keystonejs/keystone/commit/6de20ce6b4aad46d2a8cc5ca8d1ada179aca7c9b) [#2461](https://github.com/keystonejs/keystone/pull/2461) Thanks [@Vultraz](https://github.com/Vultraz)! - Cleaned up an unnecessary use of <Route>.
+
+* [`df422e70`](https://github.com/keystonejs/keystone/commit/df422e70291ebf8660428c9a4a378611623985ae) [#2450](https://github.com/keystonejs/keystone/pull/2450) Thanks [@Vultraz](https://github.com/Vultraz)! - Changed the design of the sign in page.
+
+* Updated dependencies [[`8aa42fae`](https://github.com/keystonejs/keystone/commit/8aa42fae79d4a63a74d4a0f1e3ac6c74fae6885b)]:
+  - @keystonejs/build-field-types@5.2.2
+
 ## 5.9.0
 
 ### Minor Changes
