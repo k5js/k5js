@@ -33,6 +33,7 @@ const keystone = new Keystone({
 | `schemaNames`    | `Array`    | `['public']`                                                        |                                                                                                                                            |
 | `queryLimits`    | `Object`   | `{}`                                                                | Configures global query limits                                                                                                             |
 | `appVersion`     | `Object`   | `{ version: '1.0.0', addVersionToHttpHeaders: true, access: true }` | Configure the application version and where it is made available                                                                           |
+| `publicConfig`   | `Object`   | `{}`                                                                | Custom configuration made available to `admin-ui` as part of `adminMeta`                                                                   |
 
 ### `secureCookies`
 
