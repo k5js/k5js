@@ -16,7 +16,7 @@ import { ListProvider, useList } from '@keystonejs/app-admin-ui/components';
 
 const MAX_IDS_IN_FILTER = 100;
 
-function SetAsCurrentUser({ listKey, value, onAddUser, many }) {
+function SetAsCurrentUser({ listKey, value, onAddUser, many, isDisabled }) {
   const path = 'authenticated' + listKey;
 
   const { data } = useQuery(gql`
@@ -46,6 +46,7 @@ function SetAsCurrentUser({ listKey, value, onAddUser, many }) {
             }}
             icon={PersonIcon}
             aria-label={label}
+            isDisabled={isDisabled}
           />
         )}
       </Tooltip>
@@ -103,9 +104,8 @@ function LinkToRelatedItems({ field, value }) {
   );
 }
 
-function CreateAndAddItem({ field, item, onCreate, CreateItemModal }) {
+function CreateAndAddItem({ field, item, onCreate, CreateItemModal, isDisabled }) {
   const { list, openCreateItemModal } = useList();
-
   let relatedList = field.adminMeta.getListByKey(field.config.ref);
   let label = `Create and add ${relatedList.singular}`;
 
@@ -144,6 +144,7 @@ function CreateAndAddItem({ field, item, onCreate, CreateItemModal }) {
               aria-label={label}
               variant="ghost"
               css={{ marginLeft: gridSize }}
+              isDisabled={isDisabled}
             />
           );
         }}
@@ -168,6 +169,7 @@ const RelationshipField = ({
   item,
   list,
   CreateItemModal,
+  isReadOnly,
 }) => {
   const handleChange = option => {
     const { many } = field.config;
@@ -199,6 +201,7 @@ const RelationshipField = ({
             renderContext={renderContext}
             htmlID={htmlID}
             onChange={handleChange}
+            isDisabled={isReadOnly}
           />
         </div>
         <ListProvider list={relatedList}>
@@ -210,6 +213,7 @@ const RelationshipField = ({
             item={item}
             list={list}
             CreateItemModal={CreateItemModal}
+            isDisabled={isReadOnly}
           />
         </ListProvider>
         {authStrategy && ref === authStrategy.listKey && (
@@ -220,6 +224,7 @@ const RelationshipField = ({
             }}
             value={value}
             listKey={authStrategy.listKey}
+            isDisabled={isReadOnly}
           />
         )}
         <LinkToRelatedItems field={field} value={value} />
