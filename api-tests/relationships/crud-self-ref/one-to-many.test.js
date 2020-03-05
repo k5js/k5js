@@ -218,111 +218,111 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
           test(
             'With connect',
             runner(setupKeystone, async ({ keystone }) => {
-              const { locations } = await createInitialData(keystone);
-              const location = locations[0];
+              const { users } = await createInitialData(keystone);
+              const user = users[0];
               const { data, errors } = await graphqlRequest({
                 keystone,
                 query: `
                 mutation {
                   createUser(data: {
-                    locations: { connect: [{ id: "${location.id}" }] }
-                  }) { id locations { id } }
+                    friends: { connect: [{ id: "${user.id}" }] }
+                  }) { id friends { id } }
                 }
             `,
               });
               expect(errors).toBe(undefined);
-              expect(data.createUser.locations.map(({ id }) => id.toString())).toEqual([
-                location.id,
+              expect(data.createUser.friends.map(({ id }) => id.toString())).toEqual([
+                user.id,
               ]);
 
-              const { Company, Location } = await getUserAndFriend(
+              const { User, Friend } = await getUserAndFriend(
                 keystone,
                 data.createUser.id,
-                location.id
+                user.id
               );
 
               // Everything should now be connected
-              expect(data.createUser.locations.map(({ id }) => id.toString())).toEqual([
-                location.id,
+              expect(data.createUser.friends.map(({ id }) => id.toString())).toEqual([
+                user.id,
               ]);
-              expect(Location.company.id.toString()).toBe(Company.id.toString());
+              expect(Friend.friendOf.id.toString()).toBe(User.id.toString());
             })
           );
 
           test(
             'With create',
             runner(setupKeystone, async ({ keystone }) => {
-              const locationName = sampleOne(alphanumGenerator);
+              const friendName = sampleOne(alphanumGenerator);
               const { data, errors } = await graphqlRequest({
                 keystone,
                 query: `
                 mutation {
                   createUser(data: {
-                    locations: { create: [{ name: "${locationName}" }] }
-                  }) { id locations { id } }
+                    friends: { create: [{ name: "${friendName}" }] }
+                  }) { id friends { id } }
                 }
             `,
               });
               expect(errors).toBe(undefined);
 
-              const { Company, Location } = await getUserAndFriend(
+              const { User, Friend } = await getUserAndFriend(
                 keystone,
                 data.createUser.id,
-                data.createUser.locations[0].id
+                data.createUser.friends[0].id
               );
 
               // Everything should now be connected
-              expect(Company.locations.map(({ id }) => id.toString())).toEqual([
-                Location.id.toString(),
+              expect(User.friends.map(({ id }) => id.toString())).toEqual([
+                Friend.id.toString(),
               ]);
-              expect(Location.company.id.toString()).toBe(Company.id.toString());
+              expect(Friend.friendOf.id.toString()).toBe(User.id.toString());
             })
           );
 
           test(
             'With nested connect',
             runner(setupKeystone, async ({ keystone }) => {
-              const { companies } = await createInitialData(keystone);
-              const company = companies[0];
-              const locationName = sampleOne(alphanumGenerator);
+              const { users } = await createInitialData(keystone);
+              const user = users[0];
+              const friendName = sampleOne(alphanumGenerator);
 
               const { data, errors } = await graphqlRequest({
                 keystone,
                 query: `
                 mutation {
                   createUser(data: {
-                    locations: { create: [{ name: "${locationName}" company: { connect: { id: "${company.id}" } } }] }
-                  }) { id locations { id company { id } } }
+                    friends: { create: [{ name: "${friendName}" friendOf: { connect: { id: "${user.id}" } } }] }
+                  }) { id friends { id friendOf { id } } }
                 }
             `,
               });
               expect(errors).toBe(undefined);
 
-              const { Company, Location } = await getUserAndFriend(
+              const { User, Friend } = await getUserAndFriend(
                 keystone,
                 data.createUser.id,
-                data.createUser.locations[0].id
+                data.createUser.friends[0].id
               );
 
               // Everything should now be connected
-              expect(Company.locations.map(({ id }) => id.toString())).toEqual([Location.id]);
-              expect(Location.company.id.toString()).toBe(Company.id.toString());
+              expect(User.friends.map(({ id }) => id.toString())).toEqual([Friend.id]);
+              expect(Friend.friendOf.id.toString()).toBe(User.id.toString());
 
               const {
-                data: { allCompanies },
+                data: { allUsers },
               } = await graphqlRequest({
                 keystone,
-                query: `{ allCompanies { id locations { id company { id } } } }`,
+                query: `{ allUsers { id friends { id friendOf { id } } } }`,
               });
 
               // The nested company should not have a location
               expect(
-                allCompanies.filter(({ id }) => id === Company.id)[0].locations[0].company.id
-              ).toEqual(Company.id);
-              allCompanies
-                .filter(({ id }) => id !== Company.id)
-                .forEach(company => {
-                  expect(company.locations).toEqual([]);
+                allUsers.filter(({ id }) => id === User.id)[0].friends[0].friendOf.id
+              ).toEqual(User.id);
+              allUsers
+                .filter(({ id }) => id !== User.id)
+                .forEach(user => {
+                  expect(user.friends).toEqual([]);
                 });
             })
           );
@@ -330,44 +330,44 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
           test(
             'With nested create',
             runner(setupKeystone, async ({ keystone }) => {
-              const locationName = sampleOne(alphanumGenerator);
-              const companyName = sampleOne(alphanumGenerator);
+              const friendName = sampleOne(alphanumGenerator);
+              const friendOfName = sampleOne(alphanumGenerator);
 
               const { data, errors } = await graphqlRequest({
                 keystone,
                 query: `
                 mutation {
                   createUser(data: {
-                    locations: { create: [{ name: "${locationName}" company: { create: { name: "${companyName}" } } }] }
-                  }) { id locations { id company { id } } }
+                    friends: { create: [{ name: "${friendName}" friendOf: { create: { name: "${friendOfName}" } } }] }
+                  }) { id friends { id friendOf { id } } }
                 }
             `,
               });
               expect(errors).toBe(undefined);
 
-              const { Company, Location } = await getUserAndFriend(
+              const { User, Friend } = await getUserAndFriend(
                 keystone,
                 data.createUser.id,
-                data.createUser.locations[0].id
+                data.createUser.friends[0].id
               );
               // Everything should now be connected
-              expect(Company.locations.map(({ id }) => id.toString())).toEqual([Location.id]);
-              expect(Location.company.id.toString()).toBe(Company.id.toString());
+              expect(User.friends.map(({ id }) => id.toString())).toEqual([Friend.id]);
+              expect(Friend.friendOf.id.toString()).toBe(User.id.toString());
 
               // The nested company should not have a location
               const {
-                data: { allCompanies },
+                data: { allUsers },
               } = await graphqlRequest({
                 keystone,
-                query: `{ allCompanies { id locations { id company { id } } } }`,
+                query: `{ allUsers { id friends { id friendOf { id } } } }`,
               });
               expect(
-                allCompanies.filter(({ id }) => id === Company.id)[0].locations[0].company.id
-              ).toEqual(Company.id);
-              allCompanies
-                .filter(({ id }) => id !== Company.id)
-                .forEach(company => {
-                  expect(company.locations).toEqual([]);
+                allUsers.filter(({ id }) => id === User.id)[0].friends[0].friendOf.id
+              ).toEqual(User.id);
+              allUsers
+                .filter(({ id }) => id !== User.id)
+                .forEach(user => {
+                  expect(user.friends).toEqual([]);
                 });
             })
           );

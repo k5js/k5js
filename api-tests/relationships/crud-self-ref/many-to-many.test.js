@@ -308,7 +308,6 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
             runner(setupKeystone, async ({ keystone }) => {
               const friendName = sampleOne(alphanumGenerator);
               const userName = sampleOne(alphanumGenerator);
-
               const { data, errors } = await graphqlRequest({
                 keystone,
                 query: `
@@ -338,13 +337,16 @@ multiAdapterRunners().map(({ runner, adapterName }) =>
                 keystone,
                 query: `{ allUsers { id friends { id friendOf { id } } } }`,
               });
-
-              allUsers.forEach(({ friends }) => {
+              allUsers.forEach(({ id, friends }) => {
+                if (id === Friend.id) {
+                  expect(friends.map(({ id }) => id)).toEqual([]);
+                } else {
                 expect(friends.map(({ id }) => id)).toEqual([Friend.id.toString()]);
+                }
               });
               expect(allUsers[0].friends[0].friendOf).toEqual([
                 { id: allUsers[0].id },
-                { id: allUsers[1].id },
+                { id: allUsers[2].id },
               ]);
             })
           );
