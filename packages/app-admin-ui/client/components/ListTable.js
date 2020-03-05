@@ -5,19 +5,19 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 import { captureSuspensePromises, noop } from '@keystonejs/utils';
-import { KebabHorizontalIcon, LinkIcon, ShieldIcon, TrashcanIcon } from '@arch-ui/icons';
+import { ShieldIcon } from '@arch-ui/icons';
 import { colors, gridSize } from '@arch-ui/theme';
 import { alpha } from '@arch-ui/color-utils';
-import { Button } from '@arch-ui/button';
 import { CheckboxPrimitive } from '@arch-ui/controls';
-import Dropdown from '@arch-ui/dropdown';
 import { A11yText } from '@arch-ui/typography';
 import { Card } from '@arch-ui/card';
 import DeleteItemModal from './DeleteItemModal';
-import copyToClipboard from 'clipboard-copy';
 import { useListSort } from '../pages/List/dataHooks';
 import PageLoading from './PageLoading';
 import { NoResults } from './NoResults';
+import { useUIHooks } from '../providers/Hooks';
+import ItemDropDown from './ItemDropDown';
+import { ItemProvider } from '../providers/Item';
 
 const Render = ({ children }) => children();
 
@@ -183,20 +183,8 @@ class ListRow extends Component {
     );
   }
   render() {
-    const { list, link, isSelected, item, itemErrors, fields, linkField } = this.props;
-    const copyText = window.location.origin + link({ path: list.path, item });
-    const items = [
-      {
-        content: 'Copy Link',
-        icon: <LinkIcon />,
-        onClick: () => copyToClipboard(copyText),
-      },
-      {
-        content: 'Delete',
-        icon: <TrashcanIcon />,
-        onClick: this.showDeleteModal,
-      },
-    ];
+    const { list, link, isSelected, item, itemErrors, fields, linkField, hooks } = this.props;
+    const { listItemActions } = hooks;
 
     return (
       <TableRow>
@@ -208,7 +196,6 @@ class ListRow extends Component {
             onChange={this.onCheckboxChange}
             tabIndex="0"
           />
-          {this.renderDeleteModal()}
         </BodyCell>
         {fields.map(field => {
           const { path } = field;
@@ -262,23 +249,9 @@ class ListRow extends Component {
           );
         })}
         <BodyCell isSelected={isSelected} css={{ padding: 0 }}>
-          <Dropdown
-            align="right"
-            target={handlers => (
-              <Button
-                variant="subtle"
-                css={{
-                  opacity: 0,
-                  transition: 'opacity 150ms',
-                  'tr:hover > td > &': { opacity: 1 },
-                }}
-                {...handlers}
-              >
-                <KebabHorizontalIcon />
-              </Button>
-            )}
-            items={items}
-          />
+          <ItemProvider item={item}>
+            {listItemActions ? listItemActions() : <ItemDropDown />}
+          </ItemProvider>
         </BodyCell>
       </TableRow>
     );
@@ -311,6 +284,7 @@ export default function ListTable(props) {
   } = props;
 
   const [sortBy, onSortChange] = useListSort(list.key);
+  const hooks = useUIHooks();
 
   const handleSelectAll = () => {
     const allSelected = items && items.length === selectedItems.length;
@@ -431,6 +405,7 @@ export default function ListTable(props) {
                         link={itemLink}
                         linkField={linkField}
                         list={list}
+                        hooks={hooks}
                         onDelete={onChange}
                         onSelectChange={onSelectChange}
                       />
