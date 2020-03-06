@@ -21,7 +21,7 @@ const HeaderInset = props => (
 export let ItemTitle = memo(function ItemTitle({ titleText, adminPath }) {
   const { list } = useList();
   const listHref = `${adminPath}/${list.path}`;
-  const { itemHeaderActions } = useUIHooks();
+  const { itemHeaderActions } = useUIHooks(list.key);
   return (
     <HeaderInset>
       <PageTitle>{titleText}</PageTitle>

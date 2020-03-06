@@ -49,7 +49,7 @@ export function ListLayout(props) {
 
   const [selectedItems, onSelectChange] = useListSelect(items);
 
-  const { listHeaderActions } = useUIHooks();
+  const { listHeaderActions } = useUIHooks(list.key);
 
   const linkFn = ({ path, item }) => `${adminPath}/${path}/${item.id}`;
 
@@ -123,6 +123,7 @@ export function ListLayout(props) {
             <ManageToolbar isVisible css={{ marginLeft: 2 }}>
               {selectedItems.length ? (
                 <Management
+                  list={list}
                   pageSize={pageSize}
                   selectedItems={selectedItems}
                   totalItems={itemCount}

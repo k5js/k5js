@@ -5,7 +5,10 @@ const defaultHooks = {
   // Intentionally empty for now
 };
 
-export const useUIHooks = () => useContext(HooksContext);
+export const useUIHooks = listKey => {
+  const hooks = useContext(HooksContext);
+  return { ...hooks, ...(hooks[listKey] || {}) };
+};
 export const HooksProvider = ({ hooks, children }) => {
   return (
     <HooksContext.Provider value={{ ...defaultHooks, ...hooks }}>{children}</HooksContext.Provider>
