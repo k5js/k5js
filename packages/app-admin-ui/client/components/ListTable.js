@@ -284,7 +284,7 @@ export default function ListTable(props) {
   } = props;
 
   const [sortBy, onSortChange] = useListSort(list.key);
-  const hooks = useUIHooks();
+  const hooks = useUIHooks(list.key);
 
   const handleSelectAll = () => {
     const allSelected = items && items.length === selectedItems.length;

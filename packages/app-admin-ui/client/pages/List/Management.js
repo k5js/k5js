@@ -19,8 +19,8 @@ const SelectedCount = styled.div({
   marginRight: gridSize,
 });
 
-export default function ListManage({ pageSize, totalItems, selectedItems }) {
-  const { listManageActions } = useUIHooks();
+export default function ListManage({ list, pageSize, totalItems, selectedItems }) {
+  const { listManageActions } = useUIHooks(list.key);
   const selectedCount = selectedItems.length;
 
   return (
