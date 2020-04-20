@@ -1,5 +1,15 @@
 # @keystonejs/fields
 
+## 9.0.3
+
+### Patch Changes
+
+- [`e5fac4db`](https://github.com/keystonejs/keystone/commit/e5fac4db00e1d38c2271d8ca55e7e2bd86a07dfa) [#2730](https://github.com/keystonejs/keystone/pull/2730) Thanks [@Vultraz](https://github.com/Vultraz)! - Made HiddenInput component actually hidden.
+
+- Updated dependencies [[`16f6c300`](https://github.com/keystonejs/keystone/commit/16f6c3003d1decbb77474455ef608e3efd41ec4b), [`e5fac4db`](https://github.com/keystonejs/keystone/commit/e5fac4db00e1d38c2271d8ca55e7e2bd86a07dfa)]:
+  - @keystonejs/app-admin-ui@5.10.1
+  - @arch-ui/input@0.1.8
+
 ## 9.0.2
 
 ### Patch Changes
