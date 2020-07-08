@@ -1,5 +1,51 @@
 # @keystonejs/api-tests
 
+## 6.0.1
+
+### Patch Changes
+
+- [`5fc97cbf`](https://github.com/keystonejs/keystone/commit/5fc97cbf4489587a3a8cb38c04ba81fc2cb1fc5a) [#3171](https://github.com/keystonejs/keystone/pull/3171) Thanks [@timleslie](https://github.com/timleslie)! - Hooks no longer recieve a `{ query }` argument. This functionality has been superseded by `context.executeGraphQL()`.
+
+  ```
+  {
+    ...
+    hooks: {
+      resolveInput: async ({ actions: { query } } ) => {
+        ...
+        const { data, errors } = await query(`{ ... }`);
+        ...
+      }
+    }
+  }
+  ```
+
+  should be changed to
+
+  ```
+  {
+    ...
+    hooks: {
+      resolveInput: async ({ context } ) => {
+        ...
+        const { data, errors } = await context.executeGraphQL({ query: `{ ... }` });
+        ...
+      }
+    }
+  }
+  ```
+
+  See [the docs](/docs/discussions/server-side-graphql.md) for more details on how to use `context.executeGraphQL()`.
+
+- Updated dependencies [[`5ad84ccd`](https://github.com/keystonejs/keystone/commit/5ad84ccd8d008188e293629e90a4d7e7fde55333), [`51c89853`](https://github.com/keystonejs/keystone/commit/51c898537c7fdc8578fa47eade6a499594b0d154), [`61cdafe2`](https://github.com/keystonejs/keystone/commit/61cdafe20e0a22b5a1f9b6a2dcc4aefa45a26902), [`8480f889`](https://github.com/keystonejs/keystone/commit/8480f889a492d83ee805f19877d49fd112117939), [`49984caa`](https://github.com/keystonejs/keystone/commit/49984caaec803ed86b027c9634ac6b3f671e9ba7), [`136cb505`](https://github.com/keystonejs/keystone/commit/136cb505ce11931de7fc470debe438e335588781), [`02f069f0`](https://github.com/keystonejs/keystone/commit/02f069f0b6e28ccfe6d5cdeb59ab01bde27a655e), [`e114894d`](https://github.com/keystonejs/keystone/commit/e114894d1bbcea8940cf14486fc336aa8d112da7), [`5fc97cbf`](https://github.com/keystonejs/keystone/commit/5fc97cbf4489587a3a8cb38c04ba81fc2cb1fc5a), [`56e1798d`](https://github.com/keystonejs/keystone/commit/56e1798d6815723cfba01e6d7dc6b4fe73d4447b), [`06f86c6f`](https://github.com/keystonejs/keystone/commit/06f86c6f5c573411f0efda565a269d1d7ccb3c66), [`81b4df31`](https://github.com/keystonejs/keystone/commit/81b4df3182fc63c583e3fae5c05c528b678cab95), [`c9ca6287`](https://github.com/keystonejs/keystone/commit/c9ca628765f1ecb599c8556de2d31567ddf12504), [`3ce644d5`](https://github.com/keystonejs/keystone/commit/3ce644d5f2b6e674adb2f155c0e729536079347a), [`51aef1ef`](https://github.com/keystonejs/keystone/commit/51aef1ef06a89422e89a6118b7820848d5970669)]:
+  - @keystonejs/keystone@12.0.0
+  - @keystonejs/adapter-knex@11.0.0
+  - @keystonejs/test-utils@7.0.2
+  - @keystonejs/session@8.0.0
+  - @keystonejs/fields@14.0.0
+  - @keystonejs/adapter-mongoose@9.0.0
+  - @keystonejs/app-graphql@6.0.0
+  - @keystonejs/auth-password@5.1.11
+
 ## 6.0.0
 
 ### Major Changes

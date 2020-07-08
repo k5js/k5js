@@ -1,5 +1,11 @@
 # @keystonejs/session
 
+## 8.0.0
+
+### Major Changes
+
+- [`136cb505`](https://github.com/keystonejs/keystone/commit/136cb505ce11931de7fc470debe438e335588781) [#3175](https://github.com/keystonejs/keystone/pull/3175) Thanks [@timleslie](https://github.com/timleslie)! - `SessionManager.getContext()` no longer returns values for `{ authedItem, authedListKey }` as these values are already provided by the core of Keystone.
+
 ## 7.0.1
 
 ### Patch Changes

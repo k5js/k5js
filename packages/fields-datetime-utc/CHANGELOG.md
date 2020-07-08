@@ -1,5 +1,14 @@
 # @keystonejs/fields-datetime-utc
 
+## 6.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`51c89853`](https://github.com/keystonejs/keystone/commit/51c898537c7fdc8578fa47eade6a499594b0d154), [`5fc97cbf`](https://github.com/keystonejs/keystone/commit/5fc97cbf4489587a3a8cb38c04ba81fc2cb1fc5a), [`c9ca6287`](https://github.com/keystonejs/keystone/commit/c9ca628765f1ecb599c8556de2d31567ddf12504), [`51aef1ef`](https://github.com/keystonejs/keystone/commit/51aef1ef06a89422e89a6118b7820848d5970669)]:
+  - @keystonejs/adapter-knex@11.0.0
+  - @keystonejs/fields@14.0.0
+  - @keystonejs/adapter-mongoose@9.0.0
+
 ## 6.0.2
 
 ### Patch Changes

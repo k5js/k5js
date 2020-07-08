@@ -1,5 +1,32 @@
 # @keystonejs/app-admin-ui
 
+## 7.1.0
+
+### Minor Changes
+
+- [`49984caa`](https://github.com/keystonejs/keystone/commit/49984caaec803ed86b027c9634ac6b3f671e9ba7) [#3227](https://github.com/keystonejs/keystone/pull/3227) Thanks [@Vultraz](https://github.com/Vultraz)! - Moved `name` config option from Keystone constructor to Admin UI constructor.
+
+### Patch Changes
+
+- [`e6117d25`](https://github.com/keystonejs/keystone/commit/e6117d259e0ceeacc0b42e3db0bd39dd39537090) [#3221](https://github.com/keystonejs/keystone/pull/3221) Thanks [@singhArmani](https://github.com/singhArmani)! - **Fix**
+
+  Upon filtering out the lists based on the ids, an error could occur. Irrespective of the error, we were still storing the search value into the localStorage.
+  And when user transit back to this list page, the error would persist as we append the search query onto the url.
+
+  This fix looks into any api error, and removes the localStorage search value `location.search`, which gets set when **Filter** form is submitted.
+
+  See #3075
+
+* [`51aef1ef`](https://github.com/keystonejs/keystone/commit/51aef1ef06a89422e89a6118b7820848d5970669) [#3146](https://github.com/keystonejs/keystone/pull/3146) Thanks [@Vultraz](https://github.com/Vultraz)! - Migrated to @primer/octicons-react v10.
+
+* Updated dependencies [[`136cb505`](https://github.com/keystonejs/keystone/commit/136cb505ce11931de7fc470debe438e335588781), [`5fc97cbf`](https://github.com/keystonejs/keystone/commit/5fc97cbf4489587a3a8cb38c04ba81fc2cb1fc5a), [`51aef1ef`](https://github.com/keystonejs/keystone/commit/51aef1ef06a89422e89a6118b7820848d5970669)]:
+  - @keystonejs/session@8.0.0
+  - @keystonejs/fields@14.0.0
+  - @arch-ui/fields@3.0.3
+  - @arch-ui/options@0.0.22
+  - @arch-ui/pagination@0.0.24
+  - @arch-ui/pill@0.1.16
+
 ## 7.0.5
 
 ### Patch Changes

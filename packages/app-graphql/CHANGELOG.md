@@ -1,5 +1,19 @@
 # @keystonejs/app-graphql
 
+## 6.0.0
+
+### Major Changes
+
+- [`3ce644d5`](https://github.com/keystonejs/keystone/commit/3ce644d5f2b6e674adb2f155c0e729536079347a) [#3174](https://github.com/keystonejs/keystone/pull/3174) Thanks [@timleslie](https://github.com/timleslie)! - Replaced `keystone.getGraphQlContext()` with `keystone.createHTTPContext()`, to be used primarily by the Apollo server.
+  If you need to create a context for executing server-side GraphQL operations please use `keystone.createContext()`.
+  See [the docs](/docs/discussions/server-side-graphql.md) for more details on how to use `keystone.createContext()`.
+
+### Patch Changes
+
+- Updated dependencies [[`136cb505`](https://github.com/keystonejs/keystone/commit/136cb505ce11931de7fc470debe438e335588781)]:
+  - @keystonejs/session@8.0.0
+  - @keystonejs/app-graphql-playground@5.1.5
+
 ## 5.1.9
 
 ### Patch Changes

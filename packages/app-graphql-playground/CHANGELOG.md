@@ -1,5 +1,12 @@
 # @keystonejs/app-graphql-playground
 
+## 5.1.5
+
+### Patch Changes
+
+- Updated dependencies [[`136cb505`](https://github.com/keystonejs/keystone/commit/136cb505ce11931de7fc470debe438e335588781)]:
+  - @keystonejs/session@8.0.0
+
 ## 5.1.4
 
 ### Patch Changes
