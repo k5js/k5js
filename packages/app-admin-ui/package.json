@@ -1,7 +1,7 @@
 {
   "name": "@k5js/app-admin-ui",
   "description": "KeystoneJS Admin UI App.",
-  "version": "7.5.1",
+  "version": "0.0.0",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "engines": {
@@ -38,10 +38,10 @@
     "@babel/core": "^7.14.0",
     "@babel/runtime": "^7.14.0",
     "@emotion/core": "^10.1.1",
-    "@k5js/field-views-loader": "^6.1.1",
-    "@k5js/fields": "^22.1.2",
-    "@k5js/session": "^8.3.1",
-    "@k5js/utils": "^6.1.1",
+    "@k5js/field-views-loader": "^0.0.0",
+    "@k5js/fields": "^0.0.0",
+    "@k5js/session": "^0.0.0",
+    "@k5js/utils": "^0.0.0",
     "@primer/octicons-react": "^11.3.0",
     "@types/react": "^17.0.4",
     "apollo-upload-client": "^14.1.3",

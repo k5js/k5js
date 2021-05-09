@@ -1,15 +1,15 @@
 {
   "name": "@k5js/auth-password",
   "description": "Provides a basic password authentication strategy.",
-  "version": "6.1.1",
+  "version": "0.0.0",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "engines": {
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "@k5js/fields": "^22.1.2",
-    "@k5js/session": "^8.3.1"
+    "@k5js/fields": "^0.0.0",
+    "@k5js/session": "^0.0.0"
   },
   "repository": "https://github.com/k5js/k5js/tree/main/packages/auth-password"
 }
