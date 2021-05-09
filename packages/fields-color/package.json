@@ -1,26 +1,26 @@
 {
   "name": "@k5js/fields-color",
   "description": "KeystoneJS Color Field Type",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "engines": {
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "@arch-ui/button": "^0.0.24",
-    "@arch-ui/fields": "^3.0.7",
-    "@arch-ui/popout": "^0.0.25",
+    "@arch-ui/button": "^0.0.25",
+    "@arch-ui/fields": "^3.0.8",
+    "@arch-ui/popout": "^0.0.26",
     "@babel/runtime": "^7.14.0",
     "@emotion/core": "^10.1.1",
-    "@k5js/fields": "^0.0.0",
+    "@k5js/fields": "^0.0.1",
     "react-color": "^2.19.3"
   },
   "peerDependencies": {
     "react": "^17.0.2"
   },
   "devDependencies": {
-    "@k5js/server-side-graphql-client": "^0.0.0",
+    "@k5js/server-side-graphql-client": "^0.0.1",
     "react": "^17.0.2"
   },
   "main": "dist/fields-color.cjs.js",

@@ -1,5 +1,22 @@
 # @keystonejs/cypress-project-client-validation
 
+## 0.0.1
+
+### Patch Changes
+
+- [#95](https://github.com/keystonejs/keystone-5/pull/95) [`c8ff78b95`](https://github.com/keystonejs/keystone-5/commit/c8ff78b95af5d56d44bbc11c51e7cf28b81323b4) Thanks [@bladey](https://github.com/bladey)! - Renamed branch `master` to `main`.
+
+- Updated dependencies [[`c8ff78b95`](https://github.com/keystonejs/keystone-5/commit/c8ff78b95af5d56d44bbc11c51e7cf28b81323b4)]:
+  - @k5js/adapter-prisma@0.0.1
+  - @k5js/app-admin-ui@0.0.1
+  - @k5js/app-graphql@0.0.1
+  - @k5js/app-static@0.0.1
+  - @arch-ui/fields@3.0.8
+  - @k5js/fields@0.0.1
+  - @k5js/file-adapters@0.0.1
+  - @k5js/keystone@0.0.1
+  - @k5js/server-side-graphql-client@0.0.1
+
 ## 7.0.4
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "name": "@k5js/fields-datetime-utc",
   "description": "KeystoneJS DatetimeUtc Field Type",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "repository": "https://github.com/k5js/k5js/tree/main/packages/fields-datetime-utc",

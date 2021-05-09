@@ -1,5 +1,33 @@
 # keystone_demo_blog
 
+## 0.0.1
+
+### Patch Changes
+
+- [#131](https://github.com/keystonejs/keystone-5/pull/131) [`822d5ee34`](https://github.com/keystonejs/keystone-5/commit/822d5ee34d5b7eac7086a8938b697708c351e2e4) Thanks [@bladey](https://github.com/bladey)! - Fixed Blog demo project from throwing errors when run in `dev` mode.
+
+* [#95](https://github.com/keystonejs/keystone-5/pull/95) [`c8ff78b95`](https://github.com/keystonejs/keystone-5/commit/c8ff78b95af5d56d44bbc11c51e7cf28b81323b4) Thanks [@bladey](https://github.com/bladey)! - Renamed branch `master` to `main`.
+
+- [#126](https://github.com/keystonejs/keystone-5/pull/126) [`28a719b9b`](https://github.com/keystonejs/keystone-5/commit/28a719b9b243e1a3f5d76d10dbfa31fcbaf83ce3) Thanks [@renovate](https://github.com/apps/renovate)! - Updated dependency Next.js to `^10.2.0`.
+
+- Updated dependencies [[`c8ff78b95`](https://github.com/keystonejs/keystone-5/commit/c8ff78b95af5d56d44bbc11c51e7cf28b81323b4), [`28a719b9b`](https://github.com/keystonejs/keystone-5/commit/28a719b9b243e1a3f5d76d10dbfa31fcbaf83ce3), [`77bc54f3c`](https://github.com/keystonejs/keystone-5/commit/77bc54f3c4786b1c2d3ec7b6c017a6ad60cb749e)]:
+  - @k5js/adapter-mongoose@0.0.1
+  - @k5js/app-admin-ui@0.0.1
+  - @k5js/app-graphql@0.0.1
+  - @k5js/app-next@0.0.1
+  - @k5js/app-static@0.0.1
+  - @arch-ui/layout@0.2.17
+  - @arch-ui/typography@0.0.21
+  - @k5js/auth-password@0.0.1
+  - @k5js/fields@0.0.1
+  - @k5js/fields-authed-relationship@0.0.1
+  - @k5js/fields-markdown@0.0.1
+  - @k5js/fields-oembed@0.0.1
+  - @k5js/fields-wysiwyg-tinymce@0.0.1
+  - @k5js/file-adapters@0.0.1
+  - @k5js/keystone@0.0.1
+  - @k5js/server-side-graphql-client@0.0.1
+
 ## 7.0.2
 
 ### Patch Changes
