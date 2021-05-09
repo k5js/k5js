@@ -1,9 +1,9 @@
 // We don't currently have uniqueness tests for Relationship field types
-import { Text, Password } from '@keystonejs/fields';
-import { PasswordAuthStrategy } from '@keystonejs/auth-password';
-import { multiAdapterRunners, networkedGraphqlRequest, setupServer } from '@keystonejs/test-utils';
-import { AuthedRelationship } from '@keystonejs/fields-authed-relationship';
-const { createItem } = require('@keystonejs/server-side-graphql-client');
+import { Text, Password } from '@k5js/fields';
+import { PasswordAuthStrategy } from '@k5js/auth-password';
+import { multiAdapterRunners, networkedGraphqlRequest, setupServer } from '@k5js/test-utils';
+import { AuthedRelationship } from '@k5js/fields-authed-relationship';
+const { createItem } = require('@k5js/server-side-graphql-client');
 
 function setupKeystone(adapterName) {
   return setupServer({

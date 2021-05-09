@@ -1,4 +1,4 @@
-import { getItems } from '@keystonejs/server-side-graphql-client';
+import { getItems } from '@k5js/server-side-graphql-client';
 import slugify from '@sindresorhus/slugify';
 import cuid from 'cuid';
 import {

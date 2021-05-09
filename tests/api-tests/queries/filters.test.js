@@ -1,5 +1,5 @@
-const { multiAdapterRunners, setupServer } = require('@keystonejs/test-utils');
-const { Text, Relationship } = require('@keystonejs/fields');
+const { multiAdapterRunners, setupServer } = require('@k5js/test-utils');
+const { Text, Relationship } = require('@k5js/fields');
 
 function setupKeystone(adapterName) {
   return setupServer({

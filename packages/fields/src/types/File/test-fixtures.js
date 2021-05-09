@@ -1,4 +1,4 @@
-import { LocalFileAdapter } from '@keystonejs/file-adapters';
+import { LocalFileAdapter } from '@k5js/file-adapters';
 import { Upload } from 'graphql-upload';
 import mime from 'mime';
 import fs from 'fs';

@@ -1,4 +1,4 @@
-import { pick, defaultObj, intersection } from '@keystonejs/utils';
+import { pick, defaultObj, intersection } from '@k5js/utils';
 
 type Static = boolean;
 type Declarative = Record<string, any>;

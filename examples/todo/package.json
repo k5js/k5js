@@ -1,8 +1,8 @@
 {
-  "name": "@keystonejs/demo-project-todo",
+  "name": "@k5js/demo-project-todo",
   "description": "An example KeystoneJS project showcasing a simple Todo List.",
   "private": true,
-  "version": "5.1.28",
+  "version": "0.0.0",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "engines": {
@@ -14,13 +14,13 @@
     "start": "cross-env NODE_ENV=production keystone start"
   },
   "dependencies": {
-    "@keystonejs/adapter-mongoose": "^11.2.1",
-    "@keystonejs/app-admin-ui": "^7.5.1",
-    "@keystonejs/app-graphql": "^6.3.1",
-    "@keystonejs/app-static": "^5.2.1",
-    "@keystonejs/fields": "^22.1.2",
-    "@keystonejs/keystone": "^19.3.2",
+    "@k5js/adapter-mongoose": "^0.0.0",
+    "@k5js/app-admin-ui": "^0.0.0",
+    "@k5js/app-graphql": "^0.0.0",
+    "@k5js/app-static": "^0.0.0",
+    "@k5js/fields": "^0.0.0",
+    "@k5js/keystone": "^0.0.0",
     "cross-env": "^7.0.3"
   },
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/examples/todo"
+  "repository": "https://github.com/k5js/k5js/tree/main/examples/todo"
 }

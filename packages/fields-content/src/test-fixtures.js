@@ -1,6 +1,6 @@
 // We don't currently have uniqueness tests for Relationship field types
-import { createItem, getItem, getItems, updateItem } from '@keystonejs/server-side-graphql-client';
-import { Text } from '@keystonejs/fields';
+import { createItem, getItem, getItems, updateItem } from '@k5js/server-side-graphql-client';
+import { Text } from '@k5js/fields';
 import { Content } from './index';
 
 const DOC1 =

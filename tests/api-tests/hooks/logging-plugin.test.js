@@ -1,13 +1,13 @@
-const { Text, Password } = require('@keystonejs/fields');
-const { multiAdapterRunners, setupServer } = require('@keystonejs/test-utils');
-const { logging } = require('@keystonejs/list-plugins');
+const { Text, Password } = require('@k5js/fields');
+const { multiAdapterRunners, setupServer } = require('@k5js/test-utils');
+const { logging } = require('@k5js/list-plugins');
 const {
   createItem,
   updateItem,
   deleteItem,
   runCustomQuery,
-} = require('@keystonejs/server-side-graphql-client');
-const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
+} = require('@k5js/server-side-graphql-client');
+const { PasswordAuthStrategy } = require('@k5js/auth-password');
 
 function setupKeystone(adapterName) {
   return setupServer({

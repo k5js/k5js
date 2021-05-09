@@ -1,8 +1,8 @@
-const { Keystone } = require('@keystonejs/keystone');
-const { GraphQLApp } = require('@keystonejs/app-graphql');
-const { AdminUIApp } = require('@keystonejs/app-admin-ui');
-const { Text } = require('@keystonejs/fields');
-const { MongooseAdapter } = require('@keystonejs/adapter-mongoose');
+const { Keystone } = require('@k5js/keystone');
+const { GraphQLApp } = require('@k5js/app-graphql');
+const { AdminUIApp } = require('@k5js/app-admin-ui');
+const { Text } = require('@k5js/fields');
+const { MongooseAdapter } = require('@k5js/adapter-mongoose');
 const Stars = require('./fields/Stars');
 const MultiCheck = require('./fields/MultiCheck');
 

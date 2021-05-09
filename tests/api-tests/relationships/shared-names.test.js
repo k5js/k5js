@@ -1,6 +1,6 @@
-const { Text, Relationship } = require('@keystonejs/fields');
-const { multiAdapterRunners, setupServer } = require('@keystonejs/test-utils');
-const { createItems, updateItems } = require('@keystonejs/server-side-graphql-client');
+const { Text, Relationship } = require('@k5js/fields');
+const { multiAdapterRunners, setupServer } = require('@k5js/test-utils');
+const { createItems, updateItems } = require('@k5js/server-side-graphql-client');
 
 const createInitialData = async keystone => {
   const roles = await createItems({

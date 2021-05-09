@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { createItems } = require('@keystonejs/server-side-graphql-client');
+const { createItems } = require('@k5js/server-side-graphql-client');
 
 // Lets not hardcode password, even for test data
 const password = process.env.INITIAL_DATA_PASSWORD;

@@ -1,5 +1,5 @@
-const { multiAdapterRunners } = require('@keystonejs/test-utils');
-const { deleteItem, createItems, updateItem } = require('@keystonejs/server-side-graphql-client');
+const { multiAdapterRunners } = require('@k5js/test-utils');
+const { deleteItem, createItems, updateItem } = require('@k5js/server-side-graphql-client');
 const {
   FAKE_ID,
   nameFn,

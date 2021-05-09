@@ -1,6 +1,6 @@
 const prompts = require('prompts');
-const { MongooseAdapter } = require('@keystonejs/adapter-mongoose');
-const { KnexAdapter } = require('@keystonejs/adapter-knex');
+const { MongooseAdapter } = require('@k5js/adapter-mongoose');
+const { KnexAdapter } = require('@k5js/adapter-knex');
 const terminalLink = require('terminal-link');
 const { error, tick } = require('./util');
 const { getArgs } = require('./get-args');

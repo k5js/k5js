@@ -1,8 +1,8 @@
-const { versionGreaterOrEqualTo } = require('@keystonejs/utils');
+const { versionGreaterOrEqualTo } = require('@k5js/utils');
 
 const { knex } = require('knex');
 const pSettle = require('p-settle');
-const { BaseKeystoneAdapter, BaseListAdapter, BaseFieldAdapter } = require('@keystonejs/keystone');
+const { BaseKeystoneAdapter, BaseListAdapter, BaseFieldAdapter } = require('@k5js/keystone');
 
 const {
   escapeRegExp,
@@ -11,7 +11,7 @@ const {
   arrayToObject,
   resolveAllKeys,
   identity,
-} = require('@keystonejs/utils');
+} = require('@k5js/utils');
 
 class KnexAdapter extends BaseKeystoneAdapter {
   constructor({ knexOptions = {}, schemaName = 'public' } = {}) {
@@ -229,7 +229,7 @@ class KnexAdapter extends BaseKeystoneAdapter {
 
   getDefaultPrimaryKeyConfig() {
     // Required here due to circular refs
-    const { AutoIncrement } = require('@keystonejs/fields-auto-increment');
+    const { AutoIncrement } = require('@k5js/fields-auto-increment');
     return AutoIncrement.primaryKeyDefaults[this.name].getConfig(this.client);
   }
 

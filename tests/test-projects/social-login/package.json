@@ -1,8 +1,8 @@
 {
-  "name": "@keystonejs/cypress-project-social-login",
+  "name": "@k5js/cypress-project-social-login",
   "description": "A KeystoneJS demo project for integration testing. See @keystonejs/keystone for more.",
   "private": true,
-  "version": "6.0.4",
+  "version": "0.0.0",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "engines": {
@@ -17,16 +17,16 @@
   "dependencies": {
     "@arch-ui/fields": "^3.0.7",
     "@arch-ui/input": "^0.1.13",
-    "@keystonejs/adapter-prisma": "^3.2.1",
-    "@keystonejs/app-admin-ui": "^7.5.1",
-    "@keystonejs/app-graphql": "^6.3.1",
-    "@keystonejs/app-static": "^5.2.1",
-    "@keystonejs/auth-passport": "^6.1.1",
-    "@keystonejs/auth-password": "^6.1.1",
-    "@keystonejs/fields": "^22.1.2",
-    "@keystonejs/file-adapters": "^7.1.1",
-    "@keystonejs/keystone": "^19.3.2",
-    "@keystonejs/server-side-graphql-client": "^2.1.1",
+    "@k5js/adapter-prisma": "^0.0.0",
+    "@k5js/app-admin-ui": "^0.0.0",
+    "@k5js/app-graphql": "^0.0.0",
+    "@k5js/app-static": "^0.0.0",
+    "@k5js/auth-passport": "^0.0.0",
+    "@k5js/auth-password": "^0.0.0",
+    "@k5js/fields": "^0.0.0",
+    "@k5js/file-adapters": "^0.0.0",
+    "@k5js/keystone": "^0.0.0",
+    "@k5js/server-side-graphql-client": "^0.0.0",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "passport-wordpress": "^0.0.4",
@@ -36,5 +36,5 @@
     "dotenv-safe": "^8.2.0",
     "pino-colada": "^2.1.0"
   },
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/tests/test-projects/social-login"
+  "repository": "https://github.com/k5js/k5js/tree/main/tests/test-projects/social-login"
 }

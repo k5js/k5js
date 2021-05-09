@@ -1,8 +1,8 @@
 import cuid from 'cuid';
-import { Implementation } from '@keystonejs/fields';
-import { MongooseFieldAdapter } from '@keystonejs/adapter-mongoose';
-import { KnexFieldAdapter } from '@keystonejs/adapter-knex';
-import { PrismaFieldAdapter } from '@keystonejs/adapter-prisma';
+import { Implementation } from '@k5js/fields';
+import { MongooseFieldAdapter } from '@k5js/adapter-mongoose';
+import { KnexFieldAdapter } from '@k5js/adapter-knex';
+import { PrismaFieldAdapter } from '@k5js/adapter-prisma';
 import mongoose from 'mongoose';
 
 import fetch from 'node-fetch';

@@ -1,6 +1,6 @@
-import { Block } from '@keystonejs/fields-content/Block';
+import { Block } from '@k5js/fields-content/Block';
 import { OEmbed } from '.';
-import { Relationship as RelationshipType } from '@keystonejs/fields';
+import { Relationship as RelationshipType } from '@k5js/fields';
 
 import { resolveView } from './resolve-view';
 

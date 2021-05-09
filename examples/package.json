@@ -6,7 +6,7 @@
     "todo": "yarn --cwd todo",
     "custom-fields": "yarn --cwd custom-fields"
   },
-  "repository": "https://github.com/keystonejs/keystone-5.git",
-  "homepage": "https://github.com/keystonejs/keystone-5",
+  "repository": "https://github.com/k5js/k5js.git",
+  "homepage": "https://github.com/k5js/k5js",
   "license": "MIT"
 }

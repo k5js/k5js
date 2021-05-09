@@ -1,7 +1,7 @@
 {
-  "name": "@keystonejs/keystone",
+  "name": "@k5js/keystone",
   "description": "The main @keystonejs class & CLI. This is where the magic happens.",
-  "version": "19.3.2",
+  "version": "0.0.0",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "engines": {
@@ -11,10 +11,10 @@
     "keystone": "bin/cli.js"
   },
   "dependencies": {
-    "@keystonejs/access-control": "^7.1.1",
-    "@keystonejs/app-version": "^2.1.1",
-    "@keystonejs/session": "^8.3.1",
-    "@keystonejs/utils": "^6.1.1",
+    "@k5js/access-control": "^0.0.0",
+    "@k5js/app-version": "^0.0.0",
+    "@k5js/session": "^0.0.0",
+    "@k5js/utils": "^0.0.0",
     "apollo-errors": "^1.9.0",
     "apollo-server-express": "^2.23.0",
     "arg": "^5.0.0",
@@ -43,10 +43,10 @@
     "terminal-link": "^2.1.1"
   },
   "devDependencies": {
-    "@keystonejs/fields": "^22.1.2",
-    "@keystonejs/test-utils": "*",
+    "@k5js/fields": "^0.0.0",
+    "@k5js/test-utils": "^0.0.0",
     "p-is-promise": "^3.0.0",
     "tmp": "^0.2.1"
   },
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/packages/keystone"
+  "repository": "https://github.com/k5js/k5js/tree/main/packages/keystone"
 }

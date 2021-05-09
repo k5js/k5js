@@ -1,7 +1,7 @@
 const { gen, sampleOne } = require('testcheck');
-const { Text, Relationship } = require('@keystonejs/fields');
-const { setupServer, multiAdapterRunners } = require('@keystonejs/test-utils');
-const { createItem } = require('@keystonejs/server-side-graphql-client');
+const { Text, Relationship } = require('@k5js/fields');
+const { setupServer, multiAdapterRunners } = require('@k5js/test-utils');
+const { createItem } = require('@k5js/server-side-graphql-client');
 
 const alphanumGenerator = gen.alphaNumString.notEmpty();
 
