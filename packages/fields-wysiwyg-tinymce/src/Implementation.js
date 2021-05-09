@@ -1,4 +1,4 @@
-import { Text } from '@keystonejs/fields';
+import { Text } from '@k5js/fields';
 
 export class WysiwygImplementation extends Text.implementation {
   constructor(path, { editorConfig }) {

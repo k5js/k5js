@@ -1,5 +1,5 @@
-const { Text } = require('@keystonejs/fields');
-const { multiAdapterRunners, setupServer } = require('@keystonejs/test-utils');
+const { Text } = require('@k5js/fields');
+const { multiAdapterRunners, setupServer } = require('@k5js/test-utils');
 
 const falseFn = () => false;
 

@@ -1,11 +1,11 @@
 {
-  "name": "@keystonejs/fields-cloudinary-image",
+  "name": "@k5js/fields-cloudinary-image",
   "description": "KeystoneJS Cloudinary Image Field Type",
   "version": "2.2.1",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/packages/fields-cloudinary-image",
-  "homepage": "https://github.com/keystonejs/keystone-5",
+  "repository": "https://github.com/k5js/k5js/tree/main/packages/fields-cloudinary-image",
+  "homepage": "https://github.com/k5js/k5js",
   "engines": {
     "node": ">=10.0.0"
   },
@@ -19,10 +19,10 @@
     "@babel/runtime": "^7.14.0",
     "@emotion/core": "^10.1.1",
     "@iframely/embed.js": "^1.3.2",
-    "@keystonejs/adapter-knex": "^13.3.1",
-    "@keystonejs/adapter-mongoose": "^11.2.1",
-    "@keystonejs/fields": "^22.1.2",
-    "@keystonejs/fields-content": "^9.1.1",
+    "@k5js/adapter-knex": "^13.3.1",
+    "@k5js/adapter-mongoose": "^11.2.1",
+    "@k5js/fields": "^22.1.2",
+    "@k5js/fields-content": "^9.1.1",
     "@primer/octicons-react": "^11.3.0",
     "image-extensions": "^1.1.0",
     "prop-types": "^15.7.2",
@@ -42,7 +42,7 @@
     ]
   },
   "devDependencies": {
-    "@keystonejs/file-adapters": "*",
+    "@k5js/file-adapters": "*",
     "cloudinary": "^1.25.1",
     "dotenv": "^8.2.0",
     "graphql-upload": "^11.0.0",

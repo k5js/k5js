@@ -1,5 +1,5 @@
 {
-  "name": "@keystonejs/app-static",
+  "name": "@k5js/app-static",
   "description": "KeystoneJS Static File App.",
   "version": "5.2.1",
   "author": "The KeystoneJS Development Team",
@@ -17,5 +17,5 @@
   "devDependencies": {
     "express": "^4.17.1"
   },
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/packages/app-static"
+  "repository": "https://github.com/k5js/k5js/tree/main/packages/app-static"
 }

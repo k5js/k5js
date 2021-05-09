@@ -3,8 +3,8 @@ const path = require('path');
 const { execSync } = require('child_process');
 const cuid = require('cuid');
 const { getGenerators, formatSchema } = require('@prisma/sdk');
-const { BaseKeystoneAdapter, BaseListAdapter, BaseFieldAdapter } = require('@keystonejs/keystone');
-const { defaultObj, mapKeys, identity, flatten } = require('@keystonejs/utils');
+const { BaseKeystoneAdapter, BaseListAdapter, BaseFieldAdapter } = require('@k5js/keystone');
+const { defaultObj, mapKeys, identity, flatten } = require('@k5js/utils');
 
 class PrismaAdapter extends BaseKeystoneAdapter {
   constructor() {
@@ -268,7 +268,7 @@ class PrismaAdapter extends BaseKeystoneAdapter {
 
   getDefaultPrimaryKeyConfig() {
     // Required here due to circular refs
-    const { AutoIncrement } = require('@keystonejs/fields-auto-increment');
+    const { AutoIncrement } = require('@k5js/fields-auto-increment');
     return AutoIncrement.primaryKeyDefaults[this.name].getConfig();
   }
 

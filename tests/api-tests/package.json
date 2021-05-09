@@ -1,5 +1,5 @@
 {
-  "name": "@keystonejs/api-tests",
+  "name": "@k5js/api-tests",
   "description": "A set of tests for running against the KeystoneJS API.",
   "private": true,
   "version": "9.1.1",
@@ -8,15 +8,15 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/tests/api-tests",
-  "homepage": "https://github.com/keystonejs/keystone-5",
+  "repository": "https://github.com/k5js/k5js/tree/main/tests/api-tests",
+  "homepage": "https://github.com/k5js/k5js",
   "devDependencies": {
-    "@keystonejs/adapter-knex": "*",
-    "@keystonejs/adapter-mongoose": "*",
-    "@keystonejs/app-graphql": "*",
-    "@keystonejs/keystone": "*",
-    "@keystonejs/server-side-graphql-client": "*",
-    "@keystonejs/session": "*",
+    "@k5js/adapter-knex": "*",
+    "@k5js/adapter-mongoose": "*",
+    "@k5js/app-graphql": "*",
+    "@k5js/keystone": "*",
+    "@k5js/server-side-graphql-client": "*",
+    "@k5js/session": "*",
     "cookie-signature": "^1.1.0",
     "cuid": "^2.1.8",
     "globby": "^11.0.3",
@@ -25,12 +25,12 @@
     "testcheck": "^1.0.0-rc.2"
   },
   "dependencies": {
-    "@keystonejs/auth-password": "^6.1.1",
-    "@keystonejs/fields": "^22.1.2",
-    "@keystonejs/fields-authed-relationship": "^1.1.1",
-    "@keystonejs/list-plugins": "^8.1.1",
-    "@keystonejs/test-utils": "^13.1.1",
-    "@keystonejs/utils": "^6.1.1",
+    "@k5js/auth-password": "^6.1.1",
+    "@k5js/fields": "^22.1.2",
+    "@k5js/fields-authed-relationship": "^1.1.1",
+    "@k5js/list-plugins": "^8.1.1",
+    "@k5js/test-utils": "^13.1.1",
+    "@k5js/utils": "^6.1.1",
     "express": "^4.17.1"
   }
 }

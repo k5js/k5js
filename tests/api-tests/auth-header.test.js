@@ -1,8 +1,8 @@
-const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
-const { Text, Password, DateTime } = require('@keystonejs/fields');
-const { multiAdapterRunners, networkedGraphqlRequest } = require('@keystonejs/test-utils');
-const { setupServer } = require('@keystonejs/test-utils');
-const { createItems } = require('@keystonejs/server-side-graphql-client');
+const { PasswordAuthStrategy } = require('@k5js/auth-password');
+const { Text, Password, DateTime } = require('@k5js/fields');
+const { multiAdapterRunners, networkedGraphqlRequest } = require('@k5js/test-utils');
+const { setupServer } = require('@k5js/test-utils');
+const { createItems } = require('@k5js/server-side-graphql-client');
 
 const initialData = {
   User: [

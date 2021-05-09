@@ -1,6 +1,6 @@
 const globby = require('globby');
 const path = require('path');
-const { multiAdapterRunners, setupServer } = require('@keystonejs/test-utils');
+const { multiAdapterRunners, setupServer } = require('@k5js/test-utils');
 
 const testModules = globby.sync(`packages/**/src/**/test-fixtures.js`, {
   absolute: true,

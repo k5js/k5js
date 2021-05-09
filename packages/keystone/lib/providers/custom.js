@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express');
-const { parseCustomAccess } = require('@keystonejs/access-control');
-const { objMerge } = require('@keystonejs/utils');
+const { parseCustomAccess } = require('@k5js/access-control');
+const { objMerge } = require('@k5js/utils');
 const { AccessDeniedError } = require('../ListTypes/graphqlErrors');
 const { graphqlLogger } = require('../Keystone/logger');
 

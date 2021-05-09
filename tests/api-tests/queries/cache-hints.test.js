@@ -1,10 +1,10 @@
-const { Integer, Text, Relationship } = require('@keystonejs/fields');
+const { Integer, Text, Relationship } = require('@k5js/fields');
 const {
   multiAdapterRunners,
   setupServer,
   networkedGraphqlRequest,
-} = require('@keystonejs/test-utils');
-const { createItems } = require('@keystonejs/server-side-graphql-client');
+} = require('@k5js/test-utils');
+const { createItems } = require('@k5js/server-side-graphql-client');
 
 function setupKeystone(adapterName) {
   return setupServer({

@@ -1,10 +1,10 @@
 {
-  "name": "@keystonejs/file-adapters",
+  "name": "@k5js/file-adapters",
   "description": "Adapters for handling storage of the File type",
   "version": "7.1.1",
   "main": "index.js",
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/packages/file-adapters",
-  "homepage": "https://github.com/keystonejs/keystone-5",
+  "repository": "https://github.com/k5js/k5js/tree/main/packages/file-adapters",
+  "homepage": "https://github.com/k5js/k5js",
   "author": "The Keystone Development Team",
   "license": "MIT",
   "engines": {

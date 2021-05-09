@@ -1,5 +1,5 @@
-const { Keystone } = require('@keystonejs/keystone');
-const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
+const { Keystone } = require('@k5js/keystone');
+const { PasswordAuthStrategy } = require('@k5js/auth-password');
 const {
   File,
   Text,
@@ -8,11 +8,11 @@ const {
   Select,
   Password,
   CloudinaryImage,
-} = require('@keystonejs/fields');
-const { CloudinaryAdapter, LocalFileAdapter } = require('@keystonejs/file-adapters');
-const { GraphQLApp } = require('@keystonejs/app-graphql');
-const { AdminUIApp } = require('@keystonejs/app-admin-ui');
-const { StaticApp } = require('@keystonejs/app-static');
+} = require('@k5js/fields');
+const { CloudinaryAdapter, LocalFileAdapter } = require('@k5js/file-adapters');
+const { GraphQLApp } = require('@k5js/app-graphql');
+const { AdminUIApp } = require('@k5js/app-admin-ui');
+const { StaticApp } = require('@k5js/app-static');
 
 const { staticRoute, staticPath, cloudinary, cookieSecret } = require('./config');
 
@@ -20,7 +20,7 @@ const { DISABLE_AUTH } = process.env;
 const LOCAL_FILE_SRC = `${staticPath}/avatars`;
 const LOCAL_FILE_ROUTE = `${staticRoute}/avatars`;
 
-const { PrismaAdapter } = require('@keystonejs/adapter-prisma');
+const { PrismaAdapter } = require('@k5js/adapter-prisma');
 
 const keystone = new Keystone({
   adapter: new PrismaAdapter(),

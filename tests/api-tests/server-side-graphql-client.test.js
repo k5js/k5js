@@ -1,5 +1,5 @@
-const { Text, Integer } = require('@keystonejs/fields');
-const { multiAdapterRunners, setupServer } = require('@keystonejs/test-utils');
+const { Text, Integer } = require('@k5js/fields');
+const { multiAdapterRunners, setupServer } = require('@k5js/test-utils');
 const {
   createItems,
   createItem,
@@ -9,7 +9,7 @@ const {
   getItems,
   updateItem,
   updateItems,
-} = require('@keystonejs/server-side-graphql-client');
+} = require('@k5js/server-side-graphql-client');
 
 const testData = Array(50)
   .fill()

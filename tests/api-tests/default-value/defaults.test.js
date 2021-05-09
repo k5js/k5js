@@ -1,6 +1,6 @@
-const { createItem } = require('@keystonejs/server-side-graphql-client');
-const { multiAdapterRunners, setupServer } = require('@keystonejs/test-utils');
-const { Text } = require('@keystonejs/fields');
+const { createItem } = require('@k5js/server-side-graphql-client');
+const { multiAdapterRunners, setupServer } = require('@k5js/test-utils');
+const { Text } = require('@k5js/fields');
 
 const setupList = (adapterName, fields) => () =>
   setupServer({

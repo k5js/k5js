@@ -1,4 +1,4 @@
-const { Keystone } = require('@keystonejs/keystone');
+const { Keystone } = require('@k5js/keystone');
 const {
   File,
   Text,
@@ -13,19 +13,19 @@ const {
   Slug,
   Virtual,
   Decimal,
-} = require('@keystonejs/fields');
-const { Content } = require('@keystonejs/fields-content');
-const { CloudinaryAdapter, LocalFileAdapter } = require('@keystonejs/file-adapters');
-const { Markdown } = require('@keystonejs/fields-markdown');
-const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
-const { Color } = require('@keystonejs/fields-color');
-const { GraphQLApp } = require('@keystonejs/app-graphql');
-const { AdminUIApp } = require('@keystonejs/app-admin-ui');
-const { StaticApp } = require('@keystonejs/app-static');
+} = require('@k5js/fields');
+const { Content } = require('@k5js/fields-content');
+const { CloudinaryAdapter, LocalFileAdapter } = require('@k5js/file-adapters');
+const { Markdown } = require('@k5js/fields-markdown');
+const { Wysiwyg } = require('@k5js/fields-wysiwyg-tinymce');
+const { Color } = require('@k5js/fields-color');
+const { GraphQLApp } = require('@k5js/app-graphql');
+const { AdminUIApp } = require('@k5js/app-admin-ui');
+const { StaticApp } = require('@k5js/app-static');
 const { graphql } = require('graphql');
-const { OEmbed, IframelyOEmbedAdapter } = require('@keystonejs/fields-oembed');
-const { CloudinaryImage } = require('@keystonejs/fields-cloudinary-image');
-const { Unsplash } = require('@keystonejs/fields-unsplash');
+const { OEmbed, IframelyOEmbedAdapter } = require('@k5js/fields-oembed');
+const { CloudinaryImage } = require('@k5js/fields-cloudinary-image');
+const { Unsplash } = require('@k5js/fields-unsplash');
 
 const MockOEmbedAdapter = require('./mocks/oembed-adapter');
 
@@ -40,7 +40,7 @@ const { formatISO } = require('date-fns');
 // TODO: Make this work again
 // const SecurePassword = require('./custom-fields/SecurePassword');
 
-const { PrismaAdapter } = require('@keystonejs/adapter-prisma');
+const { PrismaAdapter } = require('@k5js/adapter-prisma');
 
 const keystone = new Keystone({
   adapter: new PrismaAdapter(),

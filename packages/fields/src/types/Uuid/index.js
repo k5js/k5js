@@ -32,7 +32,7 @@ const Uuid = {
         throw (
           `The Uuid field type doesn't provide a default primary key field configuration for the ` +
           `'${client}' knex client. You'll need to supply your own 'id' field for each list or use a ` +
-          `different field type for your ids (eg '@keystonejs/fields-auto-increment').`
+          `different field type for your ids (eg '@k5js/fields-auto-increment').`
         );
       },
     },
@@ -41,7 +41,7 @@ const Uuid = {
         throw (
           `The Uuid field type doesn't provide a default primary key field configuration for the ` +
           `'${client}' prisma client. You'll need to supply your own 'id' field for each list or use a ` +
-          `different field type for your ids (eg '@keystonejs/fields-auto-increment').`
+          `different field type for your ids (eg '@k5js/fields-auto-increment').`
         );
       },
     },
@@ -50,7 +50,7 @@ const Uuid = {
         throw (
           `The Uuid field type doesn't provide a default primary key field configuration for mongoose. ` +
           `You'll need to supply your own 'id' field for each list or use a different field type for your ` +
-          `ids (eg '@keystonejs/fields-mongoid').`
+          `ids (eg '@k5js/fields-mongoid').`
         );
       },
     },

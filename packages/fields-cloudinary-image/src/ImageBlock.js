@@ -1,9 +1,9 @@
 import { resolveView } from './resolve-view';
 
-import { Block } from '@keystonejs/fields-content/Block';
-import { imageContainer, caption } from '@keystonejs/fields-content/blocks';
+import { Block } from '@k5js/fields-content/Block';
+import { imageContainer, caption } from '@k5js/fields-content/blocks';
 import { CloudinaryImage } from '.';
-import { Select as SelectType, Relationship as RelationshipType } from '@keystonejs/fields';
+import { Select as SelectType, Relationship as RelationshipType } from '@k5js/fields';
 
 const RelationshipWrapper = {
   ...RelationshipType,

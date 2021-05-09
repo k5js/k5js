@@ -1,4 +1,4 @@
-const { omitBy, arrayToObject } = require('@keystonejs/utils');
+const { omitBy, arrayToObject } = require('@k5js/utils');
 const { mapToFields } = require('./utils');
 const { ValidationFailureError } = require('./graphqlErrors');
 

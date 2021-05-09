@@ -23,7 +23,7 @@ import {
   countArrays,
   mapKeys,
   omitBy,
-} from '@keystonejs/utils';
+} from '@k5js/utils';
 import { gridSize } from '@arch-ui/theme';
 import { AutocompleteCaptor } from '@arch-ui/input';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@keystonejs/demo-custom-fields",
+  "name": "@k5js/demo-custom-fields",
   "description": "An example KeystoneJS project showcasing custom fields.",
   "private": true,
   "version": "2.0.2",
@@ -19,15 +19,15 @@
     "@arch-ui/lozenge": "^0.0.19",
     "@arch-ui/theme": "^0.0.13",
     "@emotion/core": "^10.1.1",
-    "@keystonejs/adapter-mongoose": "^11.2.1",
-    "@keystonejs/app-admin-ui": "^7.5.1",
-    "@keystonejs/app-graphql": "^6.3.1",
-    "@keystonejs/app-static": "^5.2.1",
-    "@keystonejs/fields": "^22.1.2",
-    "@keystonejs/keystone": "^19.3.2",
+    "@k5js/adapter-mongoose": "^11.2.1",
+    "@k5js/app-admin-ui": "^7.5.1",
+    "@k5js/app-graphql": "^6.3.1",
+    "@k5js/app-static": "^5.2.1",
+    "@k5js/fields": "^22.1.2",
+    "@k5js/keystone": "^19.3.2",
     "@primer/octicons-react": "^11.3.0",
     "cross-env": "^7.0.3",
     "react": "^17.0.2"
   },
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/examples/custom-fields"
+  "repository": "https://github.com/k5js/k5js/tree/main/examples/custom-fields"
 }

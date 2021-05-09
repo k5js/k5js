@@ -3,7 +3,7 @@ import {
   KnexAutoIncrementInterface,
   PrismaAutoIncrementInterface,
 } from './Implementation';
-import { Integer } from '@keystonejs/fields';
+import { Integer } from '@k5js/fields';
 
 export const AutoIncrement = {
   type: 'AutoIncrement',

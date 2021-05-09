@@ -1,5 +1,5 @@
 const cuid = require('cuid');
-const { objMerge, getType, escapeRegExp } = require('@keystonejs/utils');
+const { objMerge, getType, escapeRegExp } = require('@k5js/utils');
 
 const getRelatedListAdapterFromQueryPath = (listAdapter, queryPath) => {
   if (!listAdapter) {

@@ -17,7 +17,7 @@ import {
   omitBy,
   captureSuspensePromises,
   countArrays,
-} from '@keystonejs/utils';
+} from '@k5js/utils';
 
 import CreateItemModal from '../../components/CreateItemModal';
 import DeleteItemModal from '../../components/DeleteItemModal';

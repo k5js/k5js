@@ -1,5 +1,5 @@
 {
-  "name": "@keystonejs/fields-markdown",
+  "name": "@k5js/fields-markdown",
   "description": "KeystoneJS Markdown Field Type",
   "version": "5.3.1",
   "author": "The KeystoneJS Development Team",
@@ -15,7 +15,7 @@
     "@arch-ui/typography": "^0.0.20",
     "@babel/runtime": "^7.14.0",
     "@emotion/core": "^10.1.1",
-    "@keystonejs/fields": "^22.1.2",
+    "@k5js/fields": "^22.1.2",
     "@primer/octicons-react": "^11.3.0",
     "codemirror": "^5.61.0",
     "prop-types": "^15.7.2",
@@ -23,7 +23,7 @@
     "react-codemirror2": "^7.2.1"
   },
   "devDependencies": {
-    "@keystonejs/server-side-graphql-client": "*"
+    "@k5js/server-side-graphql-client": "*"
   },
   "preconstruct": {
     "entrypoints": [
@@ -33,5 +33,5 @@
   },
   "main": "dist/fields-markdown.cjs.js",
   "module": "dist/fields-markdown.esm.js",
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/packages/fields-markdown"
+  "repository": "https://github.com/k5js/k5js/tree/main/packages/fields-markdown"
 }

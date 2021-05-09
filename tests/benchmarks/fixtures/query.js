@@ -1,6 +1,6 @@
-const { Text, Relationship } = require('@keystonejs/fields');
-const { createItem, createItems } = require('@keystonejs/server-side-graphql-client');
-const { setupServer } = require('@keystonejs/test-utils');
+const { Text, Relationship } = require('@k5js/fields');
+const { createItem, createItems } = require('@k5js/server-side-graphql-client');
+const { setupServer } = require('@k5js/test-utils');
 const { FixtureGroup, timeQuery, populate, range } = require('../lib/utils');
 
 function setupKeystone(adapterName) {

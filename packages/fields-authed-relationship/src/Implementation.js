@@ -1,4 +1,4 @@
-import { Relationship } from '@keystonejs/fields';
+import { Relationship } from '@k5js/fields';
 
 export class AuthedRelationship extends Relationship.implementation {
   constructor(path, config, meta) {

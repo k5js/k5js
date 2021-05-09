@@ -1,23 +1,23 @@
 {
-  "name": "@keystonejs/fields-authed-relationship",
+  "name": "@k5js/fields-authed-relationship",
   "description": "KeystoneJS AuthedRelationship Field Type",
   "version": "1.1.1",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "main": "dist/fields-authed-relationship.cjs.js",
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/packages/fields-authed-relationship",
-  "homepage": "https://github.com/keystonejs/keystone-5",
+  "repository": "https://github.com/k5js/k5js/tree/main/packages/fields-authed-relationship",
+  "homepage": "https://github.com/k5js/k5js",
   "engines": {
     "node": ">=10.0.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.14.0",
-    "@keystonejs/fields": "^22.1.2"
+    "@k5js/fields": "^22.1.2"
   },
   "devDependencies": {
-    "@keystonejs/auth-password": "*",
-    "@keystonejs/server-side-graphql-client": "*",
-    "@keystonejs/test-utils": "*"
+    "@k5js/auth-password": "*",
+    "@k5js/server-side-graphql-client": "*",
+    "@k5js/test-utils": "*"
   },
   "module": "dist/fields-authed-relationship.esm.js"
 }

@@ -1,4 +1,4 @@
-const { flatten, defaultObj } = require('@keystonejs/utils');
+const { flatten, defaultObj } = require('@k5js/utils');
 
 /**
  * Format of input object:

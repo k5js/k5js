@@ -1,5 +1,5 @@
 {
-  "name": "@keystonejs/app-graphql",
+  "name": "@k5js/app-graphql",
   "description": "KeystoneJS GraphQL App.",
   "version": "6.3.1",
   "author": "The KeystoneJS Development Team",
@@ -8,9 +8,9 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "@keystonejs/app-graphql-playground": "^5.2.1",
-    "@keystonejs/session": "^8.3.1",
-    "@keystonejs/utils": "^6.1.1",
+    "@k5js/app-graphql-playground": "^5.2.1",
+    "@k5js/session": "^8.3.1",
+    "@k5js/utils": "^6.1.1",
     "graphql": "^15.5.0",
     "graphql-upload": "^11.0.0",
     "nanoassert": "^2.0.0"
@@ -21,5 +21,5 @@
   "devDependencies": {
     "express": "^4.17.1"
   },
-  "repository": "https://github.com/keystonejs/keystone-5/tree/main/packages/app-graphql"
+  "repository": "https://github.com/k5js/k5js/tree/main/packages/app-graphql"
 }
