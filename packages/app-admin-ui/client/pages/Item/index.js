@@ -11,13 +11,7 @@ import { Button } from '@arch-ui/button';
 import { AutocompleteCaptor } from '@arch-ui/input';
 import { Card } from '@arch-ui/card';
 import { gridSize } from '@arch-ui/theme';
-import {
-  mapKeys,
-  arrayToObject,
-  omitBy,
-  captureSuspensePromises,
-  countArrays,
-} from '@k5js/utils';
+import { mapKeys, arrayToObject, omitBy, captureSuspensePromises, countArrays } from '@k5js/utils';
 
 import CreateItemModal from '../../components/CreateItemModal';
 import DeleteItemModal from '../../components/DeleteItemModal';

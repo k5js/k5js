@@ -1,9 +1,5 @@
 const { Integer, Text, Relationship } = require('@k5js/fields');
-const {
-  multiAdapterRunners,
-  setupServer,
-  networkedGraphqlRequest,
-} = require('@k5js/test-utils');
+const { multiAdapterRunners, setupServer, networkedGraphqlRequest } = require('@k5js/test-utils');
 const {
   validation: { depthLimit, definitionLimit, fieldLimit },
 } = require('@k5js/app-graphql');
