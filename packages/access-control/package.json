@@ -1,7 +1,7 @@
 {
   "name": "@k5js/access-control",
   "description": "KeystoneJS Access Control parsing and validating utilities.",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "The KeystoneJS Development Team",
   "license": "MIT",
   "main": "dist/access-control.cjs.js",
@@ -10,7 +10,7 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "@k5js/utils": "^0.0.0"
+    "@k5js/utils": "^0.0.1"
   },
   "repository": "https://github.com/k5js/k5js/tree/main/packages/access-control"
 }
