@@ -11,7 +11,7 @@
     "@k5js/fields-auto-increment": "^0.0.0",
     "@k5js/keystone": "^0.0.0",
     "@k5js/utils": "^0.0.0",
-    "knex": "^0.95.4",
+    "knex": "^2.4.0",
     "p-settle": "^4.1.1",
     "pg": "^8.6.0"
   },
